@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عالم اسما | أقوى عروض وتخفيضات الأجهزة المنزلية والكهربائية</title>
+  <meta name="description"
+    content="متجر عالم اسما - الوجهة الأولى للأجهزة المنزلية والكهربائية في مصر. ريفيوهات وفيديوهات حقيقية، دفع 20% عربون والباقي عند الاستلام، وضمان الوكيل المعتمد.">
+  <meta name="keywords"
+    content="عالم اسما, أجهزة منزلية, ثلاجات, غسالات, بوتجازات, شاشات, عروض أجهزة كهربائية, ريفيوهات أجهزة منزلية">
+
+  <!-- Favicon / Brand Icon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
+
+  <!-- Google Fonts: Cairo & Tajawal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=3.0">
+
+  <!-- Instant Modal Helpers -->
+  <script>
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        if (modalId === 'quickViewModal') {
+          modal.style.setProperty('display', 'block', 'important');
+          modal.style.setProperty('align-items', 'flex-start', 'important');
+          modal.style.setProperty('justify-content', 'flex-start', 'important');
+        } else {
+          modal.style.setProperty('display', 'flex', 'important');
+        }
+        modal.style.setProperty('opacity', '1', 'important');
+        modal.style.setProperty('visibility', 'visible', 'important');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        modal.scrollTop = 0;
+      }
+    }
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('active');
+        modal.style.setProperty('display', 'none', 'important');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+    function openAdminPanel(tabName = 'productsTab') {
+      openModal('adminModal');
+      if (typeof switchAdminTab === 'function') {
+        switchAdminTab(tabName);
+      }
+    }
+  </script>
+</head>
+
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement" id="topAnnouncement">
+    <div class="container announcement-content">
+      <div class="announcement-badge">
+        <span class="pulse-dot"></span>
+        <span>عالم اسما الرسمي</span>
+      </div>
+      <p class="announcement-text">
+        مرحباً بكم في متجر <strong>عالم اسما</strong> للأجهزة المنزلية والكهربائية - ريفيوهات حقيقية، ضمان الوكيل
+        المعتمد، وتوصيل لكافة المحافظات!
+      </p>
+      <div class="announcement-links">
+        <a href="https://www.youtube.com/@asma_world" target="_blank" rel="noopener noreferrer" class="yt-pill-link">
+          <svg class="yt-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path
+              d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          قناتنا على يوتيوب @asma_world
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <header class="main-header" id="mainHeader">
+    <div class="container header-container">
+
+      <!-- Brand Logo -->
+      <div class="brand-wrapper">
+        <a href="#heroSection" class="brand-logo" id="brandLogo">
+          <div class="logo-icon-box">
+            <span class="logo-emoji">✨</span>
+          </div>
+          <div class="logo-text-group">
+            <span class="logo-title">عالم اسما</span>
+            <span class="logo-subtitle">للأجهزة المنزلية والكهربائية</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Live Search Bar -->
+      <div class="search-bar-wrapper">
+        <form class="search-form" id="searchForm" onsubmit="return false;">
+          <div class="search-input-group">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="liveSearchInput" class="search-input"
+              placeholder="ابحث عن ثلاجة، غسالة، بوتجاز، قلاية هوائية..." autocomplete="off">
+            <button type="button" class="clear-search-btn" id="clearSearchBtn" aria-label="مسح البحث" hidden>✕</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <!-- YouTube Channel Direct Link -->
+        <a href="https://www.youtube.com/@asma_world" target="_blank" rel="noopener noreferrer" class="btn-header-yt"
+          id="headerYtBtn" title="شاهد قناة عالم اسما على يوتيوب">
+          <span class="yt-badge-dot"></span>
+          <svg class="yt-svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          <span class="yt-text">قناة يوتيوب</span>
+        </a>
+
+        <!-- Admin Panel Trigger -->
+        <button class="btn-icon-action" id="openAdminBtn" onclick="openAdminPanel()" title="لوحة إدارة المتجر"
+          aria-label="لوحة التحكم">
+          <span class="action-icon">⚙️</span>
+          <span class="action-label">الإدارة</span>
+        </button>
+
+        <!-- Cart Trigger with Counter & Live Deposit Preview -->
+        <button class="btn-cart-trigger" id="openCartBtn" onclick="toggleCartDrawer(true)" aria-label="سلة المشتريات">
+          <div class="cart-icon-wrap">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-badge" id="cartCounterBadge">0</span>
+          </div>
+          <div class="cart-quick-info">
+            <span class="cart-quick-label">السلة</span>
+            <span class="cart-quick-val" id="cartHeaderDepositVal">0 ج.م</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Pills Navigation with Smooth Scrolling Arrows -->
+    <nav class="category-nav-bar" id="categoryNavBar">
+      <div class="container category-nav-container">
+        <!-- Right Arrow (Scroll toward right/start in RTL) -->
+        <button type="button" class="category-nav-scroll-btn scroll-btn-right" id="catScrollRightBtn"
+          aria-label="تمرير الفلاتر لليمين" title="تمرير لليمين">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Scrollable Wrapper for Pills -->
+        <div class="category-pills-scroll-wrapper" id="categoryPillsScrollWrapper">
+          <ul class="category-pills-list" id="categoryPillsList">
+            <!-- Rendered dynamically by renderCategoryNav() in app.js -->
+          </ul>
+        </div>
+
+        <!-- Left Arrow (Scroll toward left/end in RTL) -->
+        <button type="button" class="category-nav-scroll-btn scroll-btn-left" id="catScrollLeftBtn"
+          aria-label="تمرير الفلاتر لليسار" title="تمرير لليسار">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content Body -->
+  <main id="mainContent">
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="heroSection">
+      <div class="container hero-container">
+
+        <div class="hero-content">
+          <div class="hero-tags-group">
+            <span class="hero-tag tag-official">🌟المتجر الرسمي لمعرض عالم اسما</span>
+            <span class="hero-tag tag-discount">🔥 تخفيضات كبرى تصل إلى 35%</span>
+          </div>
+
+          <h1 class="hero-title">
+            أقوى عروض الأجهزة المنزلية<br>
+            مع <span class="highlight-brand">عالم اسما</span> في بيتك!
+          </h1>
+
+          <p class="hero-description">
+            شاهدي ريفيوهات وفيديوهات حقيقية لكل جهاز قبل الشراء عبر قناتنا على يوتيوب.
+            احجزي جهازك الآن بدفع <strong>20% فقط عربون بالفيزا</strong> وسددي الـ <strong>80% المتبقية كاش عند
+              الاستلام</strong> والمعاينة!
+          </p>
+
+          <!-- Key Financial Highlights Mini Cards -->
+          <div class="hero-features-chips">
+            <div class="feature-chip">
+              <span class="chip-icon">💳</span>
+              <div class="chip-text">
+                <strong>20% عربون أونلاين</strong>
+                <small>تأكيد الحجز فورياً</small>
+              </div>
+            </div>
+            <div class="feature-chip">
+              <span class="chip-icon">💵</span>
+              <div class="chip-text">
+                <strong>80% كاش عند الاستلام</strong>
+                <small>بعد الفحص والمعاينة</small>
+              </div>
+            </div>
+            <div class="feature-chip">
+              <span class="chip-icon">🛡️</span>
+              <div class="chip-text">
+                <strong>ضمان أصلي معتمد</strong>
+                <small>من الوكيل الرسمي 100%</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Action Buttons -->
+          <div class="hero-cta-group">
+            <a href="#catalogSection" class="btn-primary-glow">
+              <span>تصفح الأجهزة والعروض</span>
+              <span class="btn-arrow">←</span>
+            </a>
+
+            <a href="https://www.youtube.com/@asma_world" target="_blank" rel="noopener noreferrer"
+              class="btn-youtube-subscribe">
+              <svg class="yt-play-svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path
+                  d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+              </svg>
+              <span>اشترك في قناتنا على يوتيوب</span>
+            </a>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="hero-stats-bar">
+            <div class="stat-item">
+              <span class="stat-num">+15,000</span>
+              <span class="stat-lbl">عميل سعيد بمصر</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-num">+350</span>
+              <span class="stat-lbl">فيديو ريفيو وتجربة</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-num">100%</span>
+              <span class="stat-lbl">أجهزة أصلية بالضمان</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Guarantees & Features Ribbon -->
+    <section class="guarantees-ribbon">
+      <div class="container guarantees-grid">
+        <div class="guarantee-card">
+          <div class="guarantee-icon-box bg-pink">🚚</div>
+          <div class="guarantee-text">
+            <h3>شحن وتوصيل سريع</h3>
+            <p>توصيل آمن لجميع محافظات مصر</p>
+          </div>
+        </div>
+
+        <div class="guarantee-card">
+          <div class="guarantee-icon-box bg-green">💳</div>
+          <div class="guarantee-text">
+            <h3>نظام دفع العربون (20%)</h3>
+            <p>سدد 20% أونلاين والباقي 80% كاش بعد المعاينة</p>
+          </div>
+        </div>
+
+        <div class="guarantee-card">
+          <div class="guarantee-icon-box bg-yellow">🛡️</div>
+          <div class="guarantee-text">
+            <h3>ضمان الوكيل المعتمد</h3>
+            <p>فاتورة ضريبية وشهادة ضمان معتمدة من الشركة</p>
+          </div>
+        </div>
+
+        <div class="guarantee-card">
+          <div class="guarantee-icon-box bg-pink-deep">📹</div>
+          <div class="guarantee-text">
+            <h3>فيديوهات ريفيو حقيقية</h3>
+            <p>شرح تفصيلي لكل جهاز ومميزاته على يوتيوب</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exclusive Featured Offer Dedicated Section (قسم العرض الحصري المميز) -->
+    <section class="exclusive-offer-section" id="exclusiveOfferSection">
+      <div class="container">
+        
+        <!-- Section Header Bar -->
+        <div class="exclusive-offer-header">
+          <div class="exclusive-header-title-group">
+            <div class="exclusive-badge-row">
+              <span class="exclusive-ribbon-tag">👑 عرض حصري ومميز</span>
+              <span class="exclusive-limited-tag">🔥 تخفيض خاص</span>
+            </div>
+            <h2 class="exclusive-main-title">صفقة اليوم الحصرية من معرض عالم اسما</h2>
+            <p class="exclusive-subtitle">أقوى جهاز منزلي مختار بعناية بأعلى نسبة خصم، وضمان الوكيل المعتمد، مع نظام حجز 20% عربون فقط والمعاينة قبل السداد</p>
+          </div>
+
+          <div class="exclusive-status-badge">
+            <span class="pulse-live-dot"></span>
+            <span>العرض ساري حتى نفاد الكمية</span>
+          </div>
+        </div>
+
+        <!-- Exclusive Showcase Body Container (Rendered dynamically by renderHeroShowcase()) -->
+        <div class="exclusive-offer-container" id="heroVisualContainer">
+          <!-- Dynamically populated by renderHeroShowcase() in app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Newly Added Products Section (منتجات تمت إضافتها حديثاً) -->
+    <section class="newly-added-section" id="newlyAddedSection">
+      <div class="container">
+
+        <!-- Section Header Bar -->
+        <div class="newly-added-header">
+          <div class="newly-added-title-wrap">
+            <div class="newly-added-icon-box">✨</div>
+            <div class="newly-added-text-group">
+              <div class="newly-added-badge-row">
+                <h2 class="newly-added-main-title">منتجات تمت اضافتها حديثاً</h2>
+                <span class="newly-pill-badge">🆕 وصل حديثاً</span>
+              </div>
+              <p class="newly-added-subtitle">أحدث الأجهزة المنزلية والكهربائية الأصلية التي انضمت لمعرض عالم اسما
+                مؤخراً</p>
+            </div>
+          </div>
+
+          <div class="newly-added-controls">
+            <div class="newly-scroll-nav" id="newlyScrollNav">
+              <button type="button" class="newly-scroll-btn" onclick="scrollNewlyAdded('right')"
+                aria-label="تمرير لليمين" title="السابق">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+              <button type="button" class="newly-scroll-btn" onclick="scrollNewlyAdded('left')"
+                aria-label="تمرير لليسار" title="التالي">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+            </div>
+
+            <button type="button" class="btn-view-all-new" onclick="viewAllNewProducts()"
+              title="عرض كافة الأجهزة المضافة حديثاً في الكتالوج">
+              <span>عرض الكل في الكتالوج</span>
+              <span class="btn-arrow">←</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Newly Added Carousel / Grid Track -->
+        <div class="newly-added-slider-container">
+          <div class="newly-added-track" id="newlyAddedTrack">
+            <!-- Populated dynamically by renderNewlyAddedProducts() in app.js -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Product Catalog Section -->
+    <section class="catalog-section" id="catalogSection">
+      <div class="container">
+
+        <!-- Catalog Header & Controls Bar -->
+        <div class="catalog-controls-bar">
+          <div class="catalog-title-wrap">
+            <h2 class="catalog-main-title">كتالوج الأجهزة المنزلية والكهربائية</h2>
+            <p class="catalog-count-text" id="catalogShowingCountText">عرض كافة الأجهزة المتاحة</p>
+          </div>
+
+          <div class="catalog-filter-tools">
+            <!-- Sort Filter -->
+            <div class="filter-tool-item">
+              <label for="sortBySelect" class="filter-label">ترتيب حسب:</label>
+              <div class="custom-select-wrap">
+                <select id="sortBySelect" class="custom-select">
+                  <option value="featured">الأكثر تميزاً</option>
+                  <option value="price-asc">السعر: من الأقل للأعلى</option>
+                  <option value="price-desc">السعر: من الأعلى للأقل</option>
+                  <option value="discount">الأعلى خصماً</option>
+                  <option value="name">الاسم أبجدياً</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Price Range Filter Modal / Dropdown Toggle -->
+            <div class="filter-tool-item">
+              <button class="btn-filter-toggle" id="priceFilterToggleBtn">
+                <span>💰 نطاق السعر</span>
+                <span class="price-indicator" id="priceIndicatorText">الكل</span>
+              </button>
+
+              <!-- Popover Price Slider -->
+              <div class="price-popover" id="pricePopover" hidden>
+                <div class="price-popover-inner">
+                  <div class="price-popover-header">
+                    <h4>تحديد أقصى سعر</h4>
+                    <span id="maxPriceValLabel">70,000 ج.م</span>
+                  </div>
+                  <input type="range" id="priceRangeInput" min="1000" max="70000" step="500" value="70000"
+                    class="price-slider">
+                  <div class="price-popover-footer">
+                    <button type="button" class="btn-apply-price" id="applyPriceBtn">تطبيق</button>
+                    <button type="button" class="btn-reset-price" id="resetPriceBtn">إعادة ضبط</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reset All Filters -->
+            <button class="btn-reset-all" id="resetAllFiltersBtn" title="إعادة تعيين الفلاتر">
+              <span>🔄 مسح الفلاتر</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Filter Tags Display -->
+        <div class="active-filters-row" id="activeFiltersRow" hidden>
+          <span class="active-filters-title">الفلاتر المطبقة:</span>
+          <div class="active-tags-list" id="activeTagsList"></div>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div class="products-grid" id="productsGrid">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+
+        <!-- Empty State (When no products exist or none match) -->
+        <div class="empty-catalog-state" id="emptyCatalogState" hidden>
+          <div class="empty-icon" id="emptyStateIcon">🛍️</div>
+          <h3 id="emptyStateTitle">المتجر جاهز لإضافة منتجاتك وأجهزتك!</h3>
+          <p id="emptyStateDesc">لم يتم إضافة أي أجهزة حتى الآن. يمكنك البدء فوراً في إضافة الأجهزة وتحديد الأسعار
+            والعربون من لوحة الإدارة.</p>
+          <button type="button" class="btn-primary-action" id="emptyStateActionBtn"
+            onclick="openAdminPanel('addProductTab')">
+            <span>➕ إضافة جهاز جديد الآن</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Slide-out Shopping Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cartOverlay" aria-hidden="true"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="سلة المشتريات">
+
+    <div class="cart-drawer-header">
+      <div class="cart-header-title">
+        <span class="cart-drawer-icon">🛒</span>
+        <h3>سلة المشتريات</h3>
+        <span class="cart-items-count-badge" id="cartDrawerCountBadge">0 عناصر</span>
+      </div>
+      <button class="btn-close-cart" id="closeCartBtn" aria-label="إغلاق السلة">✕</button>
+    </div>
+
+    <!-- Deposit & Payment Policy Notice Bar -->
+    <div class="cart-deposit-notice">
+      <span class="notice-icon">💡</span>
+      <p id="cartDepositNoticeText">
+        <strong>طرق سداد مرنة:</strong> يمكنك دفع <strong>عربون الحجز أونلاين بالفيزا</strong> وسداد المتبقي كاش عند
+        الاستلام، أو <strong>الدفع الكامل الآن 100% بالفيزا</strong>.
+      </p>
+    </div>
+
+    <!-- Cart Items Scrollable List -->
+    <div class="cart-items-list" id="cartItemsList">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Cart Empty View -->
+    <div class="cart-empty-view" id="cartEmptyView" hidden>
+      <div class="cart-empty-art">🛍️</div>
+      <h4>سلتك فارغة حالياً!</h4>
+      <p>تصفحي أحدث عروض الأجهزة المنزلية وأضيفي ما يعجبك بضغطة زر.</p>
+      <button class="btn-start-shopping" id="cartStartShoppingBtn">ابدأ التسوق الآن</button>
+    </div>
+
+    <!-- Cart Payment Choice Selector -->
+    <div class="cart-payment-choice-box" id="cartPaymentChoiceBox">
+      <span class="choice-title">اختر طريقة السداد:</span>
+      <div class="payment-mode-options">
+        <label class="pay-mode-card active" id="payModeDepositLabel" onclick="setPaymentMode('deposit')">
+          <input type="radio" name="cartPayMode" value="deposit" checked>
+          <div class="mode-info">
+            <strong>💳 دفع العربون فقط</strong>
+            <small>وسداد الباقي كاش عند الاستلام بعد الفحص</small>
+          </div>
+        </label>
+        <label class="pay-mode-card" id="payModeFullLabel" onclick="setPaymentMode('full')">
+          <input type="radio" name="cartPayMode" value="full">
+          <div class="mode-info">
+            <strong>⚡ الدفع الكامل بالفيزا (100%)</strong>
+            <small>سداد إجمالي الطلب والشحن بالكامل إلكترونياً</small>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Cart Footer & Financial Calculations -->
+    <div class="cart-drawer-footer" id="cartDrawerFooter">
+
+      <!-- Financial Calculation Summary -->
+      <div class="cart-financial-summary">
+        <div class="summary-row">
+          <span class="summary-label">إجمالي ثمن الأجهزة:</span>
+          <span class="summary-value" id="cartSubtotalVal">0 ج.م</span>
+        </div>
+
+        <div class="summary-row shipping-row" id="cartShippingRow">
+          <span class="summary-label">تكلفة الشحن والتوصيل:</span>
+          <span class="summary-value font-bold" id="cartShippingVal">مجاناً</span>
+        </div>
+
+        <div class="summary-row total-order-row">
+          <span class="summary-label">إجمالي الطلب الشامل:</span>
+          <span class="summary-value font-bold" id="cartTotalOrderVal">0 ج.م</span>
+        </div>
+
+        <!-- Splitted Payment Highlight Box -->
+        <div class="payment-split-box" id="cartPaymentSplitBox">
+          <div class="split-item online-deposit">
+            <div class="split-header">
+              <span class="split-badge bg-green" id="cartPayNowBadge">💳 يُدفع الآن بالفيزا</span>
+              <span class="split-percent" id="cartPayNowPercent">عربون حجز</span>
+            </div>
+            <div class="split-amount" id="cartDepositVal">0 ج.م</div>
+            <small class="split-note" id="cartPayNowNote">عربون تأكيد الحجز بالفيزا</small>
+          </div>
+
+          <div class="split-item cash-remaining" id="cartRemainingCashBox">
+            <div class="split-header">
+              <span class="split-badge bg-yellow">💵 كاش عند الاستلام</span>
+              <span class="split-percent" id="cartRemainingPercent">المتبقي</span>
+            </div>
+            <div class="split-amount" id="cartRemainingVal">0 ج.م</div>
+            <small class="split-note">يُسدد للمندوب بعد المعاينة</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checkout Trigger Button -->
+      <button class="btn-proceed-checkout" id="proceedCheckoutBtn">
+        <span id="proceedCheckoutBtnText">متابعة الشراء وسداد العربون</span>
+        <span class="checkout-arrow">←</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+  <!-- Checkout & Mock Card Payment Modal -->
+  <div class="modal-overlay" id="checkoutModal" aria-hidden="true">
+    <div class="modal-card checkout-modal-card">
+
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">📦</span>
+          <h3 id="checkoutModalTitle">إتمام الطلب وتأكيد الحجز</h3>
+        </div>
+        <button class="btn-close-modal" id="closeCheckoutBtn" aria-label="إغلاق">✕</button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- Checkout Steps Indicator -->
+        <div class="checkout-steps-bar">
+          <div class="step-item active" id="step1Indicator">
+            <span class="step-num">1</span>
+            <span class="step-name">بيانات التوصيل</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item" id="step2Indicator">
+            <span class="step-num">2</span>
+            <span class="step-name" id="step2IndicatorName">سداد المبلغ بالفيزا</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item" id="step3Indicator">
+            <span class="step-num">3</span>
+            <span class="step-name">الفاتورة المعتمدة</span>
+          </div>
+        </div>
+
+        <!-- Step 1: Customer & Delivery Info Form -->
+        <div class="checkout-step-content" id="checkoutStep1">
+          <h4 class="step-title">بيانات العميل وعنوان الشحن والتوصيل</h4>
+
+          <form id="deliveryForm" class="checkout-form" novalidate>
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="custNameInput">الاسم بالكامل <span class="req">*</span></label>
+                <input type="text" id="custNameInput" class="form-control" placeholder="مثال: سارة أحمد محمود" required>
+                <span class="field-error" id="custNameError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="custPhoneInput">رقم الهاتف والواتساب <span class="req">*</span></label>
+                <input type="tel" id="custPhoneInput" class="form-control" placeholder="مثال: 01012345678" dir="ltr"
+                  required>
+                <span class="field-error" id="custPhoneError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="custGovSelect">المحافظة <span class="req">*</span></label>
+                <select id="custGovSelect" class="form-control" required>
+                  <option value="">اختر المحافظة</option>
+                  <option value="القاهرة">القاهرة</option>
+                  <option value="الجيزة">الجيزة</option>
+                  <option value="الإسكندرية">الإسكندرية</option>
+                  <option value="الدقهلية">الدقهلية (المنصورة)</option>
+                  <option value="الشرقية">الشرقية (الزقازيق)</option>
+                  <option value="القليوبية">القليوبية</option>
+                  <option value="الغربية">الغربية (طنطا)</option>
+                  <option value="المنوفية">المنوفية</option>
+                  <option value="البحيرة">البحيرة</option>
+                  <option value="دمياط">دمياط</option>
+                  <option value="كفر الشيخ">كفر الشيخ</option>
+                  <option value="الفيوم">الفيوم</option>
+                  <option value="بني سويف">بني سويف</option>
+                  <option value="المنيا">المنيا</option>
+                  <option value="أسيوط">أسيوط</option>
+                  <option value="سوهاج">سوهاج</option>
+                  <option value="قنا">قنا</option>
+                  <option value="الأقصر">الأقصر</option>
+                  <option value="أسوان">أسوان</option>
+                  <option value="بورسعيد">بورسعيد</option>
+                  <option value="الإسماعيلية">الإسماعيلية</option>
+                  <option value="السويس">السويس</option>
+                </select>
+                <span class="field-error" id="custGovError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="custCityInput">المدينة / الحي <span class="req">*</span></label>
+                <input type="text" id="custCityInput" class="form-control" placeholder="مثال: مدينة نصر / سموحة"
+                  required>
+                <span class="field-error" id="custCityError"></span>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="custAddressInput">العنوان التفصيلي <span class="req">*</span></label>
+                <textarea id="custAddressInput" class="form-control" rows="2"
+                  placeholder="اسم الشارع، رقم العمارة، رقم الشقة، علامة مميزة..." required></textarea>
+                <span class="field-error" id="custAddressError"></span>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="custNotesInput">ملاحظات إضافية للتوصيل (اختياري)</label>
+                <input type="text" id="custNotesInput" class="form-control"
+                  placeholder="مثال: التوصيل بعد الساعة 4 عصراً">
+              </div>
+
+            </div>
+
+            <!-- Quick Order Summary in Form -->
+            <div class="checkout-summary-pill">
+              <div class="pill-col">
+                <span>إجمالي الطلب الشامل:</span>
+                <strong id="checkoutSummaryTotal">0 ج.م</strong>
+              </div>
+              <div class="pill-col">
+                <span id="checkoutSummaryDepositLabel">المبلغ المطلوب سداده الآن بالفيزا:</span>
+                <strong class="text-green" id="checkoutSummaryDeposit">0 ج.م</strong>
+              </div>
+            </div>
+
+            <div class="checkout-actions">
+              <button type="button" class="btn-cancel-flat" id="cancelStep1Btn">الرجوع للسلة</button>
+              <button type="submit" class="btn-next-step" id="submitStep1Btn">
+                <span id="submitStep1BtnText">الانتقال لسداد المبلغ بالفيزا</span>
+                <span>←</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Step 2: Mock Card Payment Form -->
+        <div class="checkout-step-content" id="checkoutStep2" hidden>
+          <div class="payment-intro-card">
+            <div class="secure-badge">
+              <span>🔒 بوابة دفع إلكتروني آمنة ومحمية بتشفير 256-bit</span>
+            </div>
+            <div class="payment-amount-display">
+              <span class="lbl" id="paymentChargeTypeLbl">المبلغ المطلوب سداده الآن:</span>
+              <span class="val" id="paymentDepositAmountDisplay">0 ج.م</span>
+              <small style="display:block; font-size:11px; margin-top:4px; opacity:0.9;"
+                id="paymentChargeSubtext"></small>
+            </div>
+          </div>
+
+          <!-- Mock Payment Card Form -->
+          <form id="paymentForm" class="payment-form" novalidate>
+            <div class="card-visual-preview">
+              <div class="card-chip"></div>
+              <div class="card-brand-logo" id="cardBrandLogo">VISA</div>
+              <div class="card-number-display" id="cardNumPreview">•••• •••• •••• ••••</div>
+              <div class="card-holder-preview">
+                <small>اسم حامل البطاقة</small>
+                <span id="cardHolderPreview">NAME ON CARD</span>
+              </div>
+              <div class="card-exp-preview">
+                <small>تاريخ الانتهاء</small>
+                <span id="cardExpPreview">MM/YY</span>
+              </div>
+            </div>
+
+            <div class="form-grid">
+
+              <div class="form-group full-width">
+                <label for="cardHolderInput">الاسم المكتوب على البطاقة <span class="req">*</span></label>
+                <input type="text" id="cardHolderInput" class="form-control" placeholder="مثال: AHMED MOHAMED" required>
+                <span class="field-error" id="cardHolderError"></span>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="cardNumInput">رقم البطاقة الائتمانية (16 رقم) <span class="req">*</span></label>
+                <div class="input-with-icon">
+                  <input type="text" id="cardNumInput" class="form-control" placeholder="4000 1234 5678 9010"
+                    maxlength="19" dir="ltr" required>
+                  <span class="card-type-icon" id="cardTypeIcon">💳</span>
+                </div>
+                <span class="field-error" id="cardNumError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="cardExpInput">تاريخ الانتهاء (MM/YY) <span class="req">*</span></label>
+                <input type="text" id="cardExpInput" class="form-control" placeholder="12/28" maxlength="5" dir="ltr"
+                  required>
+                <span class="field-error" id="cardExpError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="cardCvvInput">رمز الأمان (CVV) <span class="req">*</span></label>
+                <input type="password" id="cardCvvInput" class="form-control" placeholder="123" maxlength="4" dir="ltr"
+                  required>
+                <span class="field-error" id="cardCvvError"></span>
+              </div>
+
+            </div>
+
+            <div class="payment-demo-tip">
+              <span>💡 وضع تجريبي: يمكنك كتابة أي أرقام بطاقة وتاريخ انتهاء للمعاينة وسيقبل النظام عملية الدفع
+                فورياً.</span>
+            </div>
+
+            <div class="checkout-actions">
+              <button type="button" class="btn-cancel-flat" id="backToStep1Btn">تعديل بيانات الشحن</button>
+              <button type="submit" class="btn-pay-now" id="submitPaymentBtn">
+                <span class="btn-spinner" id="paymentSpinner" hidden></span>
+                <span id="payBtnText">تأكيد وسداد المبلغ الآن</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Step 3: Printable Order Receipt Container -->
+        <div class="checkout-step-content" id="checkoutStep3" hidden>
+          <div class="receipt-container" id="printableReceipt">
+
+            <div class="receipt-header">
+              <div class="receipt-brand">
+                <div class="receipt-logo">✨</div>
+                <div>
+                  <h2>عالم اسما - Asma World</h2>
+                  <p>فاتورة إلكترونية معتمدة وإيصال سداد رسمي</p>
+                </div>
+              </div>
+              <div class="receipt-stamp">
+                <span class="stamp-badge" id="receiptStampBadge">تم سداد العربون ✅</span>
+              </div>
+            </div>
+
+            <div class="receipt-meta-grid">
+              <div class="meta-item">
+                <span class="meta-lbl">رقم الفاتورة والطلب:</span>
+                <strong class="meta-val text-brand" id="receiptOrderId">ASM-2026-0001</strong>
+              </div>
+              <div class="meta-item">
+                <span class="meta-lbl">تاريخ ووقت الطلب:</span>
+                <span class="meta-val" id="receiptDate">2026/08/26</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-lbl">اسم العميل:</span>
+                <strong class="meta-val" id="receiptCustName">-</strong>
+              </div>
+              <div class="meta-item">
+                <span class="meta-lbl">رقم الهاتف:</span>
+                <span class="meta-val" id="receiptCustPhone">-</span>
+              </div>
+              <div class="meta-item full">
+                <span class="meta-lbl">عنوان التوصيل والمعاينة:</span>
+                <span class="meta-val" id="receiptCustAddress">-</span>
+              </div>
+            </div>
+
+            <table class="receipt-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>الجهاز / المنتج</th>
+                  <th>الكمية</th>
+                  <th>سعر الوحدة</th>
+                  <th>الإجمالي</th>
+                </tr>
+              </thead>
+              <tbody id="receiptItemsTableBody">
+                <!-- Dynamically generated rows -->
+              </tbody>
+            </table>
+
+            <div class="receipt-financial-box">
+              <div class="receipt-fin-row">
+                <span>إجمالي ثمن الأجهزة:</span>
+                <span id="receiptSubtotal">0 ج.م</span>
+              </div>
+              <div class="receipt-fin-row" id="receiptShippingRow">
+                <span>تكلفة الشحن والتوصيل:</span>
+                <span id="receiptShipping">مجاناً</span>
+              </div>
+              <div class="receipt-fin-row total-row">
+                <strong>إجمالي الفاتورة الشامل:</strong>
+                <strong id="receiptTotal">0 ج.م</strong>
+              </div>
+              <div class="receipt-fin-row paid-deposit">
+                <span id="receiptPaidLbl">المسدد أونلاين بالفيزا:</span>
+                <strong class="text-green" id="receiptDepositPaid">0 ج.م (مدفوع ✅)</strong>
+              </div>
+              <div class="receipt-fin-row remaining-cash">
+                <span id="receiptRemainingLbl">المبلغ المتبقي للدفع كاش عند الاستلام:</span>
+                <strong class="text-pink-deep" id="receiptRemainingCash">0 ج.م</strong>
+              </div>
+            </div>
+
+            <div class="receipt-footer-notes">
+              <p>📌 <strong>ملاحظة هامة:</strong> يتم تسليم أصل الفاتورة الضريبية وشهادة الضمان المعتمدة مع المندوب عند
+                توصيل الجهاز ومعاينته.</p>
+              <div class="receipt-qr-simulation">
+                <div class="qr-box">
+                  <div class="qr-pattern"></div>
+                  <span>رمز الفاتورة المعتمدة</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Receipt Actions -->
+          <div class="receipt-actions-group">
+            <button type="button" class="btn-print-receipt" id="printReceiptBtn">
+              <span>🖨️ طباعة الفاتورة</span>
+            </button>
+            <a href="https://wa.me/201032997502" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-follow"
+              id="whatsappFollowBtn">
+              <span>💬 متابعة الطلب عبر الواتساب (01032997502)</span>
+            </a>
+            <button type="button" class="btn-finish-shopping" id="finishShoppingBtn">
+              <span>العودة للتسوق والموقع</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube Video Player Modal -->
+  <div class="modal-overlay" id="ytVideoModal" aria-hidden="true">
+    <div class="modal-card yt-modal-card">
+      <div class="modal-header yt-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon text-red">▶</span>
+          <h3 id="ytModalTitle">ريفيو وشرح الجهاز على قناة عالم اسما</h3>
+        </div>
+        <button class="btn-close-modal" id="closeYtModalBtn" aria-label="إغلاق">✕</button>
+      </div>
+
+      <div class="modal-body yt-modal-body">
+        <div class="video-iframe-responsive">
+          <iframe id="ytIframePlayer" src="" title="فيديو ريفيو الجهاز - عالم اسما"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+
+        <div class="yt-modal-footer-bar">
+          <div class="yt-modal-channel-info">
+            <span class="channel-avatar">👩‍🍳</span>
+            <div>
+              <strong>عالم اسما - Asma World</strong>
+              <p>اشترك وتابع كل جديد في عالم الأجهزة المنزلية</p>
+            </div>
+          </div>
+          <div class="yt-modal-btns">
+            <a href="https://www.youtube.com/@asma_world" target="_blank" rel="noopener noreferrer"
+              class="btn-yt-subscribe-sm">
+              <span>اشتراك في القناة</span>
+            </a>
+            <button type="button" class="btn-add-from-modal" id="addFromYtModalBtn">
+              <span>🛒 إضافة هذا الجهاز للسلة</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Screen Quick View / Product Details Page Overlay -->
+  <div class="modal-overlay quick-view-fullscreen-modal" id="quickViewModal" aria-hidden="true">
+    <div class="quick-view-fullscreen-container" id="quickViewContainer">
+      <div id="quickViewContent">
+        <!-- Dynamically rendered full-screen product showcase -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Management Panel Modal -->
+  <div class="modal-overlay" id="adminModal" aria-hidden="true">
+    <div class="modal-card admin-modal-card">
+
+      <div class="modal-header admin-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">⚙️</span>
+          <h3>لوحة تحكم وإدارة متجر "عالم اسما"</h3>
+        </div>
+        <button class="btn-close-modal" id="closeAdminBtn" onclick="closeModal('adminModal')"
+          aria-label="إغلاق">✕</button>
+      </div>
+
+      <div class="admin-tabs-nav">
+        <button class="admin-tab-btn active" data-tab="productsTab" id="tabProductsBtn"
+          onclick="switchAdminTab('productsTab')">
+          <span>🛍️ إدارة الأجهزة والمنتجات</span>
+          <span class="tab-badge" id="adminProductsCount">0</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="addProductTab" id="tabAddProductBtn"
+          onclick="switchAdminTab('addProductTab')">
+          <span>➕ إضافة منتج جديد</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="categoriesTab" id="tabCategoriesBtn"
+          onclick="switchAdminTab('categoriesTab')">
+          <span>🏷️ إدارة الفلاتر والأقسام</span>
+          <span class="tab-badge" id="adminCategoriesCount">0</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="ordersTab" id="tabOrdersBtn" onclick="switchAdminTab('ordersTab')">
+          <span>📦 طلبات العملاء</span>
+          <span class="tab-badge" id="adminOrdersCount">0</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="heroShowcaseTab" id="tabHeroShowcaseBtn"
+          onclick="switchAdminTab('heroShowcaseTab')">
+          <span>🎯 العرض المميز (الهيرو)</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="analyticsTab" id="tabAnalyticsBtn"
+          onclick="switchAdminTab('analyticsTab')">
+          <span>📊 إحصائيات المبيعات</span>
+        </button>
+      </div>
+
+      <div class="modal-body admin-modal-body">
+
+        <!-- Tab 1: Products Management (Edit, Delete, Stock Availability) -->
+        <div class="admin-tab-pane active" id="productsTab">
+          <div class="orders-toolbar">
+            <input type="text" id="adminProductSearch" class="form-control admin-search-input"
+              placeholder="ابحث باسم الجهاز أو الماركة...">
+            <select id="adminProductCatFilter" class="form-control" style="max-width:200px;">
+              <option value="all">كل الأقسام والفلاتر</option>
+            </select>
+          </div>
+
+          <div class="orders-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>الجهاز</th>
+                  <th>القسم</th>
+                  <th>السعر</th>
+                  <th>العربون المطلوب</th>
+                  <th>سعر الشحن</th>
+                  <th>حالة التوفر</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="adminProductsTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+          <div class="admin-empty-state" id="adminNoProductsState"
+            style="display:none; text-align:center; padding:30px 15px;">
+            <p style="font-size:15px; font-weight:700; color:var(--text-main); margin-bottom:8px;">📦 لا توجد أجهزة
+              مضافة حتى الآن في المتجر.</p>
+            <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">ابدأ بإضافة أول جهاز مع تحديد السعر،
+              الصورة، والعربون المطلوب.</p>
+            <button type="button" class="btn-save-product"
+              style="width:auto; margin:0 auto; padding:10px 22px; font-size:13.5px;"
+              onclick="switchAdminTab('addProductTab')">
+              <span>➕ إضافة جهاز جديد الآن</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 4: Orders Management -->
+        <div class="admin-tab-pane" id="ordersTab">
+          <div class="orders-toolbar">
+            <input type="text" id="adminOrderSearch" class="form-control admin-search-input"
+              placeholder="ابحث برقم الطلب أو اسم العميل أو الهاتف...">
+            <button class="btn-refresh-orders" id="refreshOrdersBtn">تحديث القائمة</button>
+          </div>
+
+          <div class="orders-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>رقم الطلب</th>
+                  <th>العميل</th>
+                  <th>طريقة السداد</th>
+                  <th>إجمالي الطلب</th>
+                  <th>المدفوع إلكترونياً</th>
+                  <th>المتبقي كاش</th>
+                  <th>حالة الطلب</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="adminOrdersTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+          <div class="admin-empty-state" id="adminNoOrdersState" style="display:none;">
+            <p>لا توجد طلبات مسجلة حتى الآن.</p>
+          </div>
+        </div>
+
+        <!-- Tab 3: Add New Product -->
+        <div class="admin-tab-pane" id="addProductTab" hidden>
+          <form id="addProductForm" class="add-product-form">
+            <div class="form-grid">
+
+              <div class="form-group full-width">
+                <label for="newProdTitle">اسم الجهاز والماركة <span class="req">*</span></label>
+                <input type="text" id="newProdTitle" class="form-control"
+                  placeholder="مثال: ثلاجة ال جي 20 قدم نوفروست إنفرتر سيلفر" required>
+              </div>
+
+              <div class="form-group">
+                <label for="newProdCategory">القسم والتصنيف (الفلتر) <span class="req">*</span></label>
+                <select id="newProdCategory" class="form-control" required>
+                  <!-- Populated dynamically via JS -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="newProdPrice">السعر الإجمالي (ج.م) <span class="req">*</span></label>
+                <input type="number" id="newProdPrice" class="form-control" placeholder="مثال: 26500" min="100"
+                  required>
+              </div>
+
+              <div class="form-group">
+                <label for="newProdOldPrice">السعر قبل الخصم (اختياري)</label>
+                <input type="number" id="newProdOldPrice" class="form-control" placeholder="مثال: 29900">
+              </div>
+
+              <div class="form-group">
+                <label for="newProdDeposit">قيمة العربون المطلوبة (ج.م)</label>
+                <input type="number" id="newProdDeposit" class="form-control"
+                  placeholder="اتركه فارغاً لحسابه 20% تلقائياً" min="0">
+              </div>
+
+              <div class="form-group">
+                <label for="newProdShipping">تكلفة الشحن للجهاز (ج.م)</label>
+                <input type="number" id="newProdShipping" class="form-control"
+                  placeholder="مثال: 150 (أو 0 للشحن المجاني)" min="0" value="0">
+              </div>
+
+              <div class="form-group">
+                <label for="newProdAvailable">حالة توفر المنتج في المخزن <span class="req">*</span></label>
+                <select id="newProdAvailable" class="form-control" required>
+                  <option value="true">متوفر في المخزن للطلب فوراً ✅</option>
+                  <option value="false">غير متوفر حالياً بالمخزن (نفذت الكمية) 🚫</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="newProdBadge">شارة التمييز</label>
+                <select id="newProdBadge" class="form-control">
+                  <option value="">بدون شارة</option>
+                  <option value="الأكثر مبيعاً">الأكثر مبيعاً</option>
+                  <option value="خصم حصري">خصم حصري</option>
+                  <option value="جديد">جديد</option>
+                  <option value="ضمان 10 سنوات">ضمان 10 سنوات</option>
+                  <option value="عروض اليوم">عروض اليوم</option>
+                </select>
+              </div>
+
+              <div class="form-group full-width">
+                <div class="gallery-label-row">
+                  <label>📸 صور ومعرض الجهاز <span class="req">*</span></label>
+                  <span class="gallery-hint-tag">يمكنك رفع عدة صور وتحديد صورة الغلاف الأساسية</span>
+                </div>
+
+                <div class="image-upload-wrapper" id="newProdImgUploadWrapper">
+                  <!-- مبدل مصدر الصورة -->
+                  <div class="image-source-tabs">
+                    <button type="button" class="img-tab-btn active" id="newImgTabUpload"
+                      onclick="switchImageTab('new', 'upload')">
+                      📁 رفع صور من جهازك (متعدد)
+                    </button>
+                    <button type="button" class="img-tab-btn" id="newImgTabUrl" onclick="switchImageTab('new', 'url')">
+                      🔗 إضافة رابط صورة (URL)
+                    </button>
+                  </div>
+
+                  <!-- منطقة رفع الملفات من الجهاز -->
+                  <div class="image-dropzone" id="newProdDropzone">
+                    <input type="file" id="newProdImgFile" accept="image/*" multiple class="file-input-hidden">
+                    <label for="newProdImgFile" class="dropzone-label">
+                      <div class="dropzone-icon">📷</div>
+                      <div class="dropzone-text">
+                        <strong>اضغط لاختيار صورة أو مجموعة صور للجهاز</strong> أو اسحب الصور هنا
+                      </div>
+                      <span class="dropzone-hint">يدعم رفع عدة صور معاً (JPG, PNG, WEBP) مع ضغط وتحسين تلقائي</span>
+                    </label>
+                  </div>
+
+                  <!-- منطقة كتابة الرابط مع زر الإضافة -->
+                  <div class="image-url-pane" id="newProdUrlPane" style="display:none;">
+                    <div class="url-input-action-row">
+                      <input type="url" id="newProdImg" class="form-control"
+                        placeholder="https://images.unsplash.com/photo-...">
+                      <button type="button" class="btn-add-url-gallery" onclick="addImageUrlToGallery('new')">
+                        <span>➕ إضافة للمعرض</span>
+                      </button>
+                    </div>
+                    <small style="display:block; margin-top:6px; color:var(--text-muted); font-size:12px;">أدخل رابط
+                      الصورة واضغط على "إضافة للمعرض" لإدراجها في ألبوم صور الجهاز.</small>
+                  </div>
+
+                  <!-- المعرض المرئي التفاعلي للصور -->
+                  <div class="admin-gallery-box" id="newProdGalleryBox">
+                    <div class="gallery-box-header">
+                      <span class="gallery-count-badge" id="newProdGalleryCountBadge">🖼️ ألبوم الصور (0 صور)</span>
+                      <button type="button" class="btn-clear-gallery-all" onclick="clearAdminGallery('new')">
+                        <span>🗑️ مسح كافة الصور</span>
+                      </button>
+                    </div>
+                    <div class="admin-gallery-grid" id="newProdGalleryGrid">
+                      <!-- Rendered dynamically by renderAdminGallery('new') -->
+                    </div>
+                  </div>
+
+                  <!-- حقل تخزين بيانات الصورة النهائي للغلاف -->
+                  <input type="hidden" id="newProdImgValue">
+                </div>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="newProdYt">معرف فيديو يوتيوب (Video ID أو رابط كامل)</label>
+                <input type="text" id="newProdYt" class="form-control" placeholder="مثال: dQw4w9WgXcQ أو رابط يوتيوب">
+              </div>
+
+              <div class="form-group full-width">
+                <label for="newProdSpecs">المواصفات وأبرز المميزات (مفصولة بفاصلة)</label>
+                <input type="text" id="newProdSpecs" class="form-control"
+                  placeholder="مثال: تكنولوجيا الإنفرتر, إضاءة ليد داخلية, خاصية التجميد السريع">
+              </div>
+
+            </div>
+
+            <div class="form-submit-row">
+              <button type="submit" class="btn-save-product">
+                <span>➕ إضافة الجهاز إلى الكتالوج فوراً</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab 4: Categories & Filters Management -->
+        <div class="admin-tab-pane" id="categoriesTab" hidden>
+          <div class="category-management-layout">
+            <div class="add-category-card">
+              <h4>➕ إضافة قسم / فلتر جديد</h4>
+              <form id="addCategoryForm" class="add-cat-form">
+                <div class="form-group">
+                  <label for="newCatName">اسم القسم / الفلتر <span class="req">*</span></label>
+                  <input type="text" id="newCatName" class="form-control" placeholder="مثال: تكييفات ومبردات" required>
+                </div>
+                <div class="form-group">
+                  <label for="newCatIcon">أيقونة القسم (إيموجي) <span class="req">*</span></label>
+                  <input type="text" id="newCatIcon" class="form-control" placeholder="مثال: ❄️ أو 💨" required>
+                </div>
+                <div class="form-group">
+                  <label for="newCatSlug">المعرف الإنجليزي (Slug) <span class="req">*</span></label>
+                  <input type="text" id="newCatSlug" class="form-control" placeholder="مثال: air-conditioners" dir="ltr"
+                    required>
+                </div>
+                <button type="submit" class="btn-save-category">حفظ وإضافة الفلتر</button>
+              </form>
+            </div>
+
+            <div class="categories-list-box">
+              <h4>الأقسام والفلاتر المتاحة حالياً</h4>
+              <div class="orders-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 105px; text-align:center;">الترتيب</th>
+                      <th>الأيقونة</th>
+                      <th>اسم الفلتر / القسم</th>
+                      <th>المعرف</th>
+                      <th>عدد الأجهزة</th>
+                      <th>الإجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminCategoriesTableBody">
+                    <!-- Injected via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Analytics Overview -->
+        <div class="admin-tab-pane" id="analyticsTab" hidden>
+          <div class="analytics-cards-grid">
+
+            <div class="stat-box-card">
+              <div class="stat-icon-circle bg-pink">📦</div>
+              <div class="stat-info">
+                <h4>إجمالي الطلبات</h4>
+                <strong id="analyticsOrdersCount">0</strong>
+              </div>
+            </div>
+
+            <div class="stat-box-card">
+              <div class="stat-icon-circle bg-green">💳</div>
+              <div class="stat-info">
+                <h4>المحصل إلكترونياً بالفيزا</h4>
+                <strong id="analyticsDepositsTotal">0 ج.م</strong>
+              </div>
+            </div>
+
+            <div class="stat-box-card">
+              <div class="stat-icon-circle bg-yellow">💵</div>
+              <div class="stat-info">
+                <h4>المتبقي كاش للتسليم</h4>
+                <strong id="analyticsRemainingTotal">0 ج.م</strong>
+              </div>
+            </div>
+
+            <div class="stat-box-card">
+              <div class="stat-icon-circle bg-pink-deep">💰</div>
+              <div class="stat-info">
+                <h4>إجمالي المبيعات الكلي</h4>
+                <strong id="analyticsRevenueTotal">0 ج.م</strong>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="admin-actions-subbar">
+            <button class="btn-clear-data" id="adminClearOrdersBtn">🗑️ مسح سجل الطلبات التجريبية</button>
+            <button class="btn-reset-catalog" id="adminResetCatalogBtn">🔄 إعادة ضبط الكتالوج الافتراضي</button>
+          </div>
+        </div>
+
+        <!-- Tab 6: Hero Showcase / Featured Offer Management -->
+        <div class="admin-tab-pane" id="heroShowcaseTab" hidden>
+          <form id="heroShowcaseForm" class="hero-showcase-admin-form">
+
+            <!-- Section 1: Mode Selection -->
+            <div class="admin-form-section">
+              <h4 class="admin-section-title">🎯 نوع العرض المميز في أعلى الصفحة (الهيرو)</h4>
+              <p class="admin-section-desc">حدد نوع المحتوى الذي ترغب في إبرازه في المساحة الترويجية الرئيسية:</p>
+
+              <div class="hero-mode-selector-grid">
+                <label class="hero-mode-option" id="modeOptSingle">
+                  <input type="radio" name="heroMode" value="single" checked onchange="toggleHeroAdminMode('single')">
+                  <div class="mode-card-inner">
+                    <span class="mode-icon">🌟</span>
+                    <strong>منتج فردي مميز</strong>
+                    <small>إبراز جهاز واحد محدد (الأكثر مبيعاً، خصم خاص...)</small>
+                  </div>
+                </label>
+
+                <label class="hero-mode-option" id="modeOptBundle">
+                  <input type="radio" name="heroMode" value="bundle" onchange="toggleHeroAdminMode('bundle')">
+                  <div class="mode-card-inner">
+                    <span class="mode-icon">🎁</span>
+                    <strong>باقة وعرض مجمع (Bundle)</strong>
+                    <small>تجميع جهازين أو أكثر معاً بسعر مخفض خاص</small>
+                  </div>
+                </label>
+
+                <label class="hero-mode-option" id="modeOptVideo">
+                  <input type="radio" name="heroMode" value="video" onchange="toggleHeroAdminMode('video')">
+                  <div class="mode-card-inner">
+                    <span class="mode-icon">🎬</span>
+                    <strong>فيديو ريفيو القناة</strong>
+                    <small>عرض بنر فيديو يوتيوب مع زر التشغيل المباشر</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Section 2: Badge & Tag Settings -->
+            <div class="admin-form-section" id="heroBadgeSection">
+              <h4 class="admin-section-title">🏷️ تخصيص الشارة الترويجية (Badge)</h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="heroBadgeText">نص الشارة الترويجية <span class="req">*</span></label>
+                  <input type="text" id="heroBadgeText" class="form-control"
+                    placeholder="مثال: الأكثر مبيعاً، أعلى تخفيض، عرض اليوم...">
+                </div>
+                <div class="form-group">
+                  <label for="heroBadgeIcon">أيقونة الشارة (إيموجي)</label>
+                  <input type="text" id="heroBadgeIcon" class="form-control"
+                    placeholder="مثال: 🔥 أو ⚡ أو 🌟 أو ⏳ أو 🎁">
+                </div>
+                <div class="form-group">
+                  <label for="heroBadgeBgColor">لون خلفية الشارة</label>
+                  <div class="color-picker-row">
+                    <input type="color" id="heroBadgeBgColor" class="color-input" value="#FDF062">
+                    <div class="preset-colors">
+                      <button type="button" class="preset-btn" style="background:#FDF062" title="أصفر ذهبي"
+                        onclick="setHeroBadgeColor('#FDF062', '#111111')"></button>
+                      <button type="button" class="preset-btn" style="background:#F8C6ED" title="وردي المتجر"
+                        onclick="setHeroBadgeColor('#F8C6ED', '#C73B8A')"></button>
+                      <button type="button" class="preset-btn" style="background:#46D238" title="أخضر زمردي"
+                        onclick="setHeroBadgeColor('#46D238', '#FFFFFF')"></button>
+                      <button type="button" class="preset-btn" style="background:#FF5722" title="برتقالي ناري"
+                        onclick="setHeroBadgeColor('#FF5722', '#FFFFFF')"></button>
+                      <button type="button" class="preset-btn" style="background:#E91E63" title="فوشيا حيوي"
+                        onclick="setHeroBadgeColor('#E91E63', '#FFFFFF')"></button>
+                      <button type="button" class="preset-btn" style="background:#111111" title="أسود داكن"
+                        onclick="setHeroBadgeColor('#111111', '#FFFFFF')"></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="heroBadgeTextColor">لون خط الشارة</label>
+                  <input type="color" id="heroBadgeTextColor" class="color-input" value="#111111">
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: Single Product Selector -->
+            <div class="admin-form-section" id="heroSingleSection">
+              <div class="admin-section-header-row">
+                <h4 class="admin-section-title">🛍️ تحديد الجهاز المميز للعرض الحصري</h4>
+                <span class="admin-section-badge-pill">🔍 بحث وفلترة ذكية</span>
+              </div>
+              <p class="admin-section-desc">ابحث وصَفّ الأجهزة بالاسم، القسم، أو السعر لاختيار الجهاز المناسب للعرض:</p>
+
+              <!-- Advanced Search & Filter Toolbar -->
+              <div class="hero-admin-filter-toolbar">
+                <div class="hero-filter-search-box">
+                  <span class="search-box-icon">🔍</span>
+                  <input type="text" id="heroSingleSearchInput" class="form-control hero-search-input"
+                    placeholder="ابحث باسم الجهاز، الموديل، أو الماركة..." oninput="filterHeroSingleProductSelect()">
+                  <button type="button" class="btn-clear-hero-search" id="clearHeroSingleSearchBtn" onclick="clearHeroSingleSearch()" style="display:none;" title="مسح البحث">✕</button>
+                </div>
+
+                <div class="hero-filter-cat-box">
+                  <label for="heroSingleCatFilter" class="toolbar-label">القسم:</label>
+                  <select id="heroSingleCatFilter" class="form-control toolbar-select" onchange="filterHeroSingleProductSelect()">
+                    <option value="all">جميع الأقسام</option>
+                    <!-- Populated dynamically via JS -->
+                  </select>
+                </div>
+
+                <div class="hero-filter-sort-box">
+                  <label for="heroSingleSortFilter" class="toolbar-label">ترتيب:</label>
+                  <select id="heroSingleSortFilter" class="form-control toolbar-select" onchange="filterHeroSingleProductSelect()">
+                    <option value="default">الأحدث في الكتالوج</option>
+                    <option value="price-asc">السعر: الأقل للأعلى</option>
+                    <option value="price-desc">السعر: الأعلى للأقل</option>
+                    <option value="discount">الأعلى تخفيضاً</option>
+                    <option value="name">الاسم أبجدياً</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Visual Interactive Product Cards Grid -->
+              <div class="hero-product-picker-container">
+                <div class="hero-picker-status-bar">
+                  <span id="heroPickerCountText" class="picker-count-text">جاري تحميل الأجهزة...</span>
+                  <small class="picker-instruction">انقر على أي جهاز لاختياره فورياً للعرض الحصري</small>
+                </div>
+
+                <div class="hero-admin-product-picker-grid" id="heroSinglePickerGrid">
+                  <!-- Rendered dynamically as visual cards with radio selection -->
+                </div>
+              </div>
+
+              <!-- Fallback Hidden/Synced Product Select for Form Serialization -->
+              <div class="form-group full-width" style="margin-top:12px;">
+                <label for="heroSingleProductId" class="req-label">الجهاز المحدد حالياً: <span class="req">*</span></label>
+                <select id="heroSingleProductId" class="form-control hero-synced-select" onchange="previewHeroSelectedProduct()">
+                  <!-- Populated dynamically via JS -->
+                </select>
+                <div id="heroSinglePreviewBox" class="hero-admin-product-preview" style="display:none; margin-top:10px;"></div>
+              </div>
+
+              <div class="form-group full-width" style="margin-top:14px;">
+                <label for="heroSingleCustomTitle">عنوان ترويجي مخصص (اختياري)</label>
+                <input type="text" id="heroSingleCustomTitle" class="form-control"
+                  placeholder="مثال: خصم خاص لعملاء المعرض فقط، أو اتركه فارغاً لاستخدام اسم الجهاز الأصلي">
+              </div>
+            </div>
+
+            <!-- Section 4: Bundle Deal Settings -->
+            <div class="admin-form-section" id="heroBundleSection" style="display:none;">
+              <div class="admin-section-header-row">
+                <h4 class="admin-section-title">🎁 إعدادات الباقة والعرض المجمع</h4>
+                <span class="admin-section-badge-pill">باقة توفير</span>
+              </div>
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label for="heroBundleTitle">اسم الباقة أو العرض المجمع <span class="req">*</span></label>
+                  <input type="text" id="heroBundleTitle" class="form-control"
+                    placeholder="مثال: باقة العروسة الاقتصادية: ثلاجة + بوتاجاز">
+                </div>
+                <div class="form-group full-width">
+                  <label for="heroBundleDesc">وصف مختصر للباقة ومميزاتها</label>
+                  <textarea id="heroBundleDesc" class="form-control" rows="2"
+                    placeholder="مثال: احصلي على أفضل أجهزة المطبخ معاً بخصم إضافي خاص وضمان معتمد كامل 100%"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="heroBundlePrice">سعر الباقة الإجمالي بعد الخصم (ج.م) <span class="req">*</span></label>
+                  <input type="number" id="heroBundlePrice" class="form-control" placeholder="مثال: 32000" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="heroBundleOldPrice">السعر الأصلي قبل خصم الباقة (ج.م)</label>
+                  <input type="number" id="heroBundleOldPrice" class="form-control" placeholder="مثال: 38500" min="0">
+                </div>
+
+                <div class="form-group full-width">
+                  <label>اختر الأجهزة المضمنة في هذه الباقة (جهازين أو أكثر) <span class="req">*</span></label>
+                  
+                  <!-- Bundle Search & Filter Bar -->
+                  <div class="hero-admin-filter-toolbar bundle-filter-toolbar">
+                    <div class="hero-filter-search-box">
+                      <span class="search-box-icon">🔍</span>
+                      <input type="text" id="heroBundleSearchInput" class="form-control hero-search-input"
+                        placeholder="ابحث لتصفية أجهزة الباقة..." oninput="filterHeroBundleChecklist()">
+                    </div>
+                    <div class="hero-filter-cat-box">
+                      <select id="heroBundleCatFilter" class="form-control toolbar-select" onchange="filterHeroBundleChecklist()">
+                        <option value="all">جميع الأقسام</option>
+                        <!-- Populated dynamically via JS -->
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="bundle-selected-count-badge" id="bundleSelectedCountBadge">
+                    <span>تم اختيار <strong id="bundleCountNum">0</strong> أجهزة في الباقة</span>
+                  </div>
+
+                  <div class="admin-bundle-checklist" id="heroBundleChecklist">
+                    <!-- Populated dynamically via JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 5: Countdown Timer Settings -->
+            <div class="admin-form-section" id="heroTimerSection">
+              <div class="timer-toggle-row">
+                <div>
+                  <h4 class="admin-section-title" style="margin-bottom:2px;">⏳ العداد التنازلي للعروض المحدودة</h4>
+                  <small style="color:var(--text-muted);">إظهار عداد تنازلي حي ومتحرك يخلق إحساساً بالحصرية ويشجع الزوار
+                    على سرعة الحجز</small>
+                </div>
+                <label class="switch-control">
+                  <input type="checkbox" id="heroTimerEnabled" onchange="toggleHeroTimerInputs(this.checked)">
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+
+              <div class="form-grid" id="heroTimerFields" style="margin-top:12px;">
+                <div class="form-group">
+                  <label for="heroTimerTitle">عنوان العداد التنازلي</label>
+                  <input type="text" id="heroTimerTitle" class="form-control" value="بقي على العرض"
+                    placeholder="مثال: بقي على العرض">
+                </div>
+                <div class="form-group">
+                  <label for="heroTimerEndDate">تاريخ ووقت انتهاء العرض</label>
+                  <input type="datetime-local" id="heroTimerEndDate" class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 6: Video Banner Settings -->
+            <div class="admin-form-section" id="heroVideoSection" style="display:none;">
+              <h4 class="admin-section-title">🎬 إعدادات بنر الفيديو</h4>
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label for="heroVideoYtId">معرف فيديو يوتيوب أو الرابط الكامل</label>
+                  <input type="text" id="heroVideoYtId" class="form-control"
+                    placeholder="مثال: https://www.youtube.com/watch?v=... أو Video ID">
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-submit-row">
+              <button type="submit" class="btn-save-product" id="saveHeroShowcaseBtn">
+                <span>💾 حفظ وتطبيق إعدادات العرض المميز فوراً</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Edit Product Modal -->
+  <div class="modal-overlay" id="editProductModal" aria-hidden="true">
+    <div class="modal-card edit-product-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">✏️</span>
+          <h3>تعديل بيانات الجهاز</h3>
+        </div>
+        <button class="btn-close-modal" onclick="closeModal('editProductModal')" aria-label="إغلاق">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="editProductForm" class="add-product-form">
+          <input type="hidden" id="editProdId">
+
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="editProdTitle">اسم الجهاز والماركة <span class="req">*</span></label>
+              <input type="text" id="editProdTitle" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="editProdCategory">القسم والتصنيف <span class="req">*</span></label>
+              <select id="editProdCategory" class="form-control" required>
+                <!-- Populated dynamically via JS -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="editProdPrice">السعر الإجمالي (ج.م) <span class="req">*</span></label>
+              <input type="number" id="editProdPrice" class="form-control" min="100" required>
+            </div>
+
+            <div class="form-group">
+              <label for="editProdOldPrice">السعر قبل الخصم (اختياري)</label>
+              <input type="number" id="editProdOldPrice" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="editProdDeposit">قيمة العربون المطلوبة (ج.م)</label>
+              <input type="number" id="editProdDeposit" class="form-control" min="0"
+                placeholder="اتركه فارغاً لحسابه 20% تلقائياً">
+            </div>
+
+            <div class="form-group">
+              <label for="editProdShipping">تكلفة الشحن (ج.م)</label>
+              <input type="number" id="editProdShipping" class="form-control" min="0" placeholder="مثال: 150 أو 0">
+            </div>
+
+            <div class="form-group">
+              <label for="editProdAvailable">حالة توفر المنتج في المخزن <span class="req">*</span></label>
+              <select id="editProdAvailable" class="form-control" required>
+                <option value="true">متوفر في المخزن للطلب فوراً ✅</option>
+                <option value="false">غير متوفر حالياً بالمخزن (نفذت الكمية) 🚫</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="editProdBadge">شارة التمييز</label>
+              <select id="editProdBadge" class="form-control">
+                <option value="">بدون شارة</option>
+                <option value="الأكثر مبيعاً">الأكثر مبيعاً</option>
+                <option value="خصم حصري">خصم حصري</option>
+                <option value="جديد">جديد</option>
+                <option value="ضمان 10 سنوات">ضمان 10 سنوات</option>
+                <option value="عروض اليوم">عروض اليوم</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <div class="gallery-label-row">
+                <label>📸 صور ومعرض الجهاز <span class="req">*</span></label>
+                <span class="gallery-hint-tag">يمكنك إضافة صور جديدة، ترتيبها، وتحديد الغلاف</span>
+              </div>
+
+              <div class="image-upload-wrapper" id="editProdImgUploadWrapper">
+                <!-- مبدل مصدر الصورة -->
+                <div class="image-source-tabs">
+                  <button type="button" class="img-tab-btn active" id="editImgTabUpload"
+                    onclick="switchImageTab('edit', 'upload')">
+                    📁 رفع صور من جهازك (متعدد)
+                  </button>
+                  <button type="button" class="img-tab-btn" id="editImgTabUrl" onclick="switchImageTab('edit', 'url')">
+                    🔗 إضافة رابط صورة (URL)
+                  </button>
+                </div>
+
+                <!-- منطقة رفع الملفات من الجهاز -->
+                <div class="image-dropzone" id="editProdDropzone">
+                  <input type="file" id="editProdImgFile" accept="image/*" multiple class="file-input-hidden">
+                  <label for="editProdImgFile" class="dropzone-label">
+                    <div class="dropzone-icon">📷</div>
+                    <div class="dropzone-text">
+                      <strong>اضغط لاختيار صورة أو مجموعة صور للجهاز</strong> أو اسحب الصور هنا
+                    </div>
+                    <span class="dropzone-hint">يدعم رفع عدة صور معاً (JPG, PNG, WEBP) مع ضغط وتحسين تلقائي</span>
+                  </label>
+                </div>
+
+                <!-- منطقة كتابة الرابط مع زر الإضافة -->
+                <div class="image-url-pane" id="editProdUrlPane" style="display:none;">
+                  <div class="url-input-action-row">
+                    <input type="url" id="editProdImg" class="form-control"
+                      placeholder="https://images.unsplash.com/photo-...">
+                    <button type="button" class="btn-add-url-gallery" onclick="addImageUrlToGallery('edit')">
+                      <span>➕ إضافة للمعرض</span>
+                    </button>
+                  </div>
+                  <small style="display:block; margin-top:6px; color:var(--text-muted); font-size:12px;">أدخل رابط
+                    الصورة واضغط على "إضافة للمعرض" لإدراجها في ألبوم صور الجهاز.</small>
+                </div>
+
+                <!-- المعرض المرئي التفاعلي للصور -->
+                <div class="admin-gallery-box" id="editProdGalleryBox">
+                  <div class="gallery-box-header">
+                    <span class="gallery-count-badge" id="editProdGalleryCountBadge">🖼️ ألبوم الصور (0 صور)</span>
+                    <button type="button" class="btn-clear-gallery-all" onclick="clearAdminGallery('edit')">
+                      <span>🗑️ مسح كافة الصور</span>
+                    </button>
+                  </div>
+                  <div class="admin-gallery-grid" id="editProdGalleryGrid">
+                    <!-- Rendered dynamically by renderAdminGallery('edit') -->
+                  </div>
+                </div>
+
+                <!-- حقل تخزين بيانات الصورة النهائي للغلاف -->
+                <input type="hidden" id="editProdImgValue">
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="editProdYt">معرف فيديو يوتيوب (Video ID أو رابط)</label>
+              <input type="text" id="editProdYt" class="form-control">
+            </div>
+
+            <div class="form-group full-width">
+              <label for="editProdSpecs">المواصفات (مفصولة بفاصلة)</label>
+              <input type="text" id="editProdSpecs" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-submit-row" style="margin-top:16px;">
+            <button type="button" class="btn-cancel-flat" onclick="closeModal('editProductModal')">إلغاء</button>
+            <button type="submit" class="btn-save-product">
+              <span>💾 حفظ التعديلات فوراً</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Category Modal -->
+  <div class="modal-overlay" id="editCategoryModal" aria-hidden="true">
+    <div class="modal-card edit-cat-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">✏️</span>
+          <h3>تعديل القسم / الفلتر</h3>
+        </div>
+        <button class="btn-close-modal" onclick="closeModal('editCategoryModal')" aria-label="إغلاق">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="editCategoryForm" class="add-cat-form">
+          <input type="hidden" id="editCatId">
+
+          <div class="form-group">
+            <label for="editCatName">اسم القسم / الفلتر <span class="req">*</span></label>
+            <input type="text" id="editCatName" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editCatIcon">أيقونة القسم (إيموجي) <span class="req">*</span></label>
+            <input type="text" id="editCatIcon" class="form-control" required>
+          </div>
+
+          <div class="form-submit-row" style="margin-top:16px;">
+            <button type="button" class="btn-cancel-flat" onclick="closeModal('editCategoryModal')">إلغاء</button>
+            <button type="submit" class="btn-save-category" style="width:auto;">
+              <span>💾 حفظ التعديل</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Action Buttons -->
+  <div class="floating-actions-container">
+    <!-- Floating Facebook Page Button -->
+    <a href="https://www.facebook.com/alamasma666666?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer"
+      class="float-btn float-fb" title="صفحة عالم اسما على فيسبوك" aria-label="صفحة فيسبوك">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+      <span class="float-tooltip">صفحة فيسبوك الرسمية</span>
+    </a>
+
+    <!-- Floating YouTube Channel Button -->
+    <a href="https://www.youtube.com/@asma_world" target="_blank" rel="noopener noreferrer" class="float-btn float-yt"
+      title="قناة عالم اسما على يوتيوب" aria-label="قناة يوتيوب">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <path
+          d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+      </svg>
+      <span class="float-tooltip">فيديوهات وريفيوهات عالم اسما</span>
+    </a>
+
+    <!-- Floating WhatsApp Support Button -->
+    <a href="https://wa.me/201032997502" target="_blank" rel="noopener noreferrer" class="float-btn float-wa"
+      title="تواصل واتساب مع خدمة العملاء" aria-label="خدمة العملاء واتساب">
+      <span class="wa-icon">💬</span>
+      <span class="float-tooltip">خدمة العملاء (01032997502)</span>
+    </a>
+
+    <!-- Floating Back to Top Button -->
+    <button class="float-btn float-top" id="backToTopBtn" title="الرجوع للأعلى" aria-label="الرجوع للأعلى" hidden>
+      <span>↑</span>
+    </button>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-bottom-nav">
+    <a href="#heroSection" class="bottom-nav-item active" id="mobNavHome">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-text">الرئيسية</span>
+    </a>
+    <a href="#catalogSection" class="bottom-nav-item" id="mobNavCatalog">
+      <span class="nav-icon">🛍️</span>
+      <span class="nav-text">الأجهزة</span>
+    </a>
+    <a href="#mainFooter" class="bottom-nav-item" id="mobNavContact">
+      <span class="nav-icon">📍</span>
+      <span class="nav-text">المقر والتواصل</span>
+    </a>
+    <button class="bottom-nav-item" id="mobNavCart" onclick="toggleCartDrawer(true)">
+      <div class="mob-cart-wrap">
+        <span class="nav-icon">🛒</span>
+        <span class="mob-cart-badge" id="mobCartBadge">0</span>
+      </div>
+      <span class="nav-text">السلة</span>
+    </button>
+    <button class="bottom-nav-item" id="mobNavAdmin" onclick="openAdminPanel()">
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-text">الإدارة</span>
+    </button>
+  </nav>
+
+  <!-- Footer Section -->
+  <footer class="main-footer" id="mainFooter">
+    <div class="container footer-grid">
+
+      <div class="footer-col brand-col">
+        <div class="footer-logo">
+          <span class="footer-logo-icon">✨</span>
+          <span class="footer-logo-title">عالم اسما</span>
+        </div>
+        <p class="footer-about">
+          المتجر المفضل لتجهيز العرائس وتجديد المطابخ بأفضل الأجهزة المنزلية والكهربائية الأصلية مع ضمان الوكيل المعتمد
+          في جمهورية مصر العربية.
+        </p>
+        <div class="footer-social-links">
+          <a href="https://www.facebook.com/alamasma666666?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer"
+            class="social-icon-btn fb" title="Facebook">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+            <span>فيسبوك</span>
+          </a>
+          <a href="https://www.youtube.com/@asma_world" target="_blank" rel="noopener noreferrer"
+            class="social-icon-btn yt" title="YouTube">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path
+                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+            <span>يوتيوب</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">🚚 تعليمات شركة الشحن</h4>
+        <div class="footer-shipping-policy">
+          <p class="footer-policy-text">
+            <strong>تنويه هام:</strong> شركة الشحن لا تدخل القرى، الحواري، الأسواق، العِزب، أو الأماكن الضيقة. يتم تسليم
+            الأوردر في أقرب نقطة رئيسية أو موقع متاح بالتنسيق المباشر مع مندوب الشحن.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">طرق الدفع والضمان</h4>
+        <ul class="footer-info-list">
+          <li>💳 دفع 20% عربون تأكيد حجز بالفيزا</li>
+          <li>💵 سداد 80% المتبقية كاش عند الاستلام</li>
+          <li>🛡️ شهادة ضمان معتمدة مع كل جهاز</li>
+          <li>🚚 شحن وتوصيل لكافة المحافظات</li>
+          <li>🔄 إمكانية المعاينة والفحص قبل الاستلام</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">تواصل ومساعدة</h4>
+        <div class="footer-contact-info">
+          <p>📞 هاتف المبيعات: <a href="tel:01032997502"
+              style="color:#FFF; font-weight:800; text-decoration:underline;">01032997502</a></p>
+          <p>💬 واتساب الاستفسارات: <a href="https://wa.me/201032997502" target="_blank" rel="noopener noreferrer"
+              style="color:var(--accent-green); font-weight:800;">01032997502 (متاح 24/7)</a></p>
+          <p>📍 المقر: <strong>محافظة القليوبية - مركز شبين القناطر - كفر طحا</strong></p>
+          <p>⏰ مواعيد العمل: يومياً من 2 بعد الظهر إلى 11 مساءً</p>
+          <p>🎬 تابعنا على يوتيوب: <a href="https://www.youtube.com/@asma_world" target="_blank"
+              rel="noopener noreferrer" style="color:var(--brand-pink); font-weight:700;">@asma_world</a></p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom-bar">
+      <div class="container footer-bottom-content">
+        <p>© 2026 جميع الحقوق محفوظة لمتجر <strong>عالم اسما - Asma World</strong> للأجهزة المنزلية.</p>
+        <p class="footer-credit">تم التطوير بأحدث معايير الويب الفائقة السرعة ⚡</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Application Logic JS -->
+  <script src="app.js?v=3.0"></script>
+</body>
+
+</html>
