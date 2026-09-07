@@ -55,21 +55,9 @@
     }
     function openAdminPanel(tabName = 'productsTab') {
       try {
-        let rawAuth = localStorage.getItem('asma_auth_session');
-        if (!rawAuth) {
-          const masterAdmin = {
-            username: 'admin',
-            role: 'admin',
-            is_admin: true,
-            name: 'المدير العام (Master Admin)',
-            deviceAuthorized: true,
-            permissions: ['all']
-          };
-          localStorage.setItem('asma_auth_session', JSON.stringify(masterAdmin));
-          rawAuth = JSON.stringify(masterAdmin);
-        }
+        const rawAuth = localStorage.getItem('asma_auth_session');
         const auth = rawAuth ? JSON.parse(rawAuth) : null;
-        if (!auth || (!auth.is_admin && auth.role !== 'admin')) {
+        if (!auth || !auth.is_admin || auth.role !== 'admin') {
           if (typeof showToast === 'function') {
             showToast('غير مصرح لك بالوصول لهذه الصفحة! يرجى تسجيل الدخول أولاً كمدير 🚫', 'error');
           }

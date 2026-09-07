@@ -4685,29 +4685,11 @@ window.switchAdminTab = switchAdminTab;
 // 13. Admin Authentication, Access Control & Route Protection
 // --------------------------------------------------------------------------
 function initAuth() {
-  let savedSession = localStorage.getItem('asma_auth_session') || sessionStorage.getItem('asma_auth_session');
-  
-  // تعيين هذا الجهاز تلقائياً كمدير رئيسي بصلاحيات كاملة
-  if (!savedSession) {
-    const defaultMasterAdmin = {
-      username: 'admin',
-      role: 'admin',
-      is_admin: true,
-      name: 'المدير العام (Master Admin)',
-      deviceAuthorized: true,
-      permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'settings'],
-      loginAt: new Date().toISOString()
-    };
-    localStorage.setItem('asma_auth_session', JSON.stringify(defaultMasterAdmin));
-    savedSession = JSON.stringify(defaultMasterAdmin);
-  }
-
+  const savedSession = localStorage.getItem('asma_auth_session') || sessionStorage.getItem('asma_auth_session');
   if (savedSession) {
     try {
       const parsed = JSON.parse(savedSession);
-      if (parsed && (parsed.is_admin === true || parsed.role === 'admin')) {
-        parsed.is_admin = true;
-        parsed.role = 'admin';
+      if (parsed && parsed.is_admin === true && parsed.role === 'admin') {
         AuthState.currentUser = parsed;
       } else {
         AuthState.currentUser = null;
