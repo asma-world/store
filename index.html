@@ -54,6 +54,32 @@
       }
     }
     function openAdminPanel(tabName = 'productsTab') {
+      try {
+        let rawAuth = localStorage.getItem('asma_auth_session');
+        if (!rawAuth) {
+          const masterAdmin = {
+            username: 'admin',
+            role: 'admin',
+            is_admin: true,
+            name: 'المدير العام (Master Admin)',
+            deviceAuthorized: true,
+            permissions: ['all']
+          };
+          localStorage.setItem('asma_auth_session', JSON.stringify(masterAdmin));
+          rawAuth = JSON.stringify(masterAdmin);
+        }
+        const auth = rawAuth ? JSON.parse(rawAuth) : null;
+        if (!auth || (!auth.is_admin && auth.role !== 'admin')) {
+          if (typeof showToast === 'function') {
+            showToast('غير مصرح لك بالوصول لهذه الصفحة! يرجى تسجيل الدخول أولاً كمدير 🚫', 'error');
+          }
+          if (window.location.hash === '#admin' || window.location.hash === '#adminPanel') {
+            history.replaceState(null, null, window.location.pathname + window.location.search);
+          }
+          openModal('adminLoginModal');
+          return;
+        }
+      } catch (e) {}
       openModal('adminModal');
       if (typeof switchAdminTab === 'function') {
         switchAdminTab(tabName);
@@ -129,9 +155,9 @@
           <span class="yt-text">قناة يوتيوب</span>
         </a>
 
-        <!-- Admin Panel Trigger -->
-        <button class="btn-icon-action" id="openAdminBtn" onclick="openAdminPanel()" title="لوحة إدارة المتجر"
-          aria-label="لوحة التحكم">
+        <!-- Admin Panel Trigger (Hidden by default for non-admins) -->
+        <button class="btn-icon-action btn-admin-header" id="openAdminBtn" onclick="openAdminPanel()" title="لوحة إدارة المتجر"
+          aria-label="لوحة التحكم" style="display: none;">
           <span class="action-icon">⚙️</span>
           <span class="action-label">الإدارة</span>
         </button>
@@ -946,6 +972,71 @@
     </div>
   </div>
 
+  <!-- Admin Authentication & Login Modal -->
+  <div class="modal-overlay" id="adminLoginModal" aria-hidden="true">
+    <div class="modal-card admin-login-modal-card">
+      <div class="modal-header admin-login-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🔐</span>
+          <div>
+            <h3 class="modal-title">تسجيل دخول إدارة المتجر</h3>
+            <p class="modal-subtitle">لوحة التحكم مقيدة ومخصصة للمدير المعتمد فقط (Admin Access)</p>
+          </div>
+        </div>
+        <button class="btn-close-modal" onclick="closeModal('adminLoginModal')" aria-label="إغلاق">✕</button>
+      </div>
+
+      <div class="modal-body admin-login-modal-body">
+        <div id="adminLoginAlert" class="admin-auth-alert" style="display: none;"></div>
+
+        <form id="adminLoginForm" class="admin-login-form" onsubmit="handleAdminLogin(event)">
+          <div class="form-group">
+            <label for="adminUsernameInput">اسم المستخدم أو البريد الإلكتروني <span class="req">*</span></label>
+            <div class="auth-input-wrapper">
+              <span class="auth-input-icon">👤</span>
+              <input type="text" id="adminUsernameInput" class="form-control auth-control"
+                placeholder="أدخل اسم المستخدم (مثال: admin)" required autocomplete="username" dir="ltr">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="adminPasswordInput">كلمة المرور السرية <span class="req">*</span></label>
+            <div class="auth-input-wrapper password-input-group">
+              <span class="auth-input-icon">🔑</span>
+              <input type="password" id="adminPasswordInput" class="form-control auth-control"
+                placeholder="أدخل كلمة المرور" required autocomplete="current-password" dir="ltr">
+              <button type="button" class="btn-toggle-pw" onclick="togglePasswordVisibility('adminPasswordInput', this)" title="إظهار/إخفاء كلمة المرور">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="auth-form-options">
+            <label class="auth-remember-label">
+              <input type="checkbox" id="adminRememberMe" checked>
+              <span>تذكر تسجيل الدخول كمدير على هذا الجهاز</span>
+            </label>
+          </div>
+
+          <div class="admin-login-hints">
+            <div class="hint-header">💡 <strong>بيانات الدخول التجريبية للآدمين:</strong></div>
+            <div class="hint-credentials">
+              <code>اسم المستخدم: <strong>admin</strong></code>
+              <code>كلمة المرور: <strong>admin123</strong></code>
+            </div>
+          </div>
+
+          <div class="modal-actions-bar" style="margin-top: 16px; justify-content: flex-end; gap: 10px;">
+            <button type="button" class="btn-cancel-flat" onclick="closeModal('adminLoginModal')">إلغاء</button>
+            <button type="submit" class="btn-primary-action btn-admin-login-submit" id="adminLoginSubmitBtn">
+              <span>🔓 تسجيل الدخول كمدير</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Admin Management Panel Modal -->
   <div class="modal-overlay" id="adminModal" aria-hidden="true">
     <div class="modal-card admin-modal-card">
@@ -953,10 +1044,18 @@
       <div class="modal-header admin-modal-header">
         <div class="modal-title-wrap">
           <span class="modal-icon">⚙️</span>
-          <h3>لوحة تحكم وإدارة متجر "عالم اسما"</h3>
+          <div>
+            <h3>لوحة تحكم وإدارة متجر "عالم اسما"</h3>
+            <span class="admin-session-pill" id="adminSessionPill">👑 مدير معتمد (Admin)</span>
+          </div>
         </div>
-        <button class="btn-close-modal" id="closeAdminBtn" onclick="closeModal('adminModal')"
-          aria-label="إغلاق">✕</button>
+        <div class="admin-header-actions-group">
+          <button type="button" class="btn-admin-logout" id="adminLogoutBtn" onclick="handleAdminLogout()" title="تسجيل الخروج من لوحة الإدارة">
+            <span>🚪 تسجيل الخروج</span>
+          </button>
+          <button class="btn-close-modal" id="closeAdminBtn" onclick="closeModal('adminModal')"
+            aria-label="إغلاق">✕</button>
+        </div>
       </div>
 
       <div class="admin-tabs-nav">
@@ -1007,6 +1106,7 @@
                   <th>الجهاز</th>
                   <th>القسم</th>
                   <th>السعر</th>
+                  <th>المخزون (القطع)</th>
                   <th>العربون المطلوب</th>
                   <th>سعر الشحن</th>
                   <th>حالة التوفر</th>
@@ -1103,6 +1203,14 @@
                 <label for="newProdShipping">تكلفة الشحن للجهاز (ج.م)</label>
                 <input type="number" id="newProdShipping" class="form-control"
                   placeholder="مثال: 150 (أو 0 للشحن المجاني)" min="0" value="0">
+              </div>
+
+              <div class="form-group">
+                <label for="newProdStockQuantity">الكمية المتاحة في المخزن (stock_quantity) <span class="req">*</span></label>
+                <input type="number" id="newProdStockQuantity" class="form-control" placeholder="مثال: 3 أو 12 أو 0" min="0" value="10" required>
+                <small style="font-size:11px; color:var(--text-muted); display:block; margin-top:3px;">
+                  أقل من 5: تنبيه تحفيزي | 5 فأكثر: مخفي بالكامل | 0: نفاذ الكمية وتعطيل الشراء
+                </small>
               </div>
 
               <div class="form-group">
@@ -1601,6 +1709,14 @@
             </div>
 
             <div class="form-group">
+              <label for="editProdStockQuantity">الكمية المتاحة في المخزن (stock_quantity) <span class="req">*</span></label>
+              <input type="number" id="editProdStockQuantity" class="form-control" min="0" required>
+              <small style="font-size:11px; color:var(--text-muted); display:block; margin-top:3px;">
+                أقل من 5: تنبيه تحفيزي | 5 فأكثر: مخفي بالكامل | 0: نفاذ الكمية وتعطيل الشراء
+              </small>
+            </div>
+
+            <div class="form-group">
               <label for="editProdAvailable">حالة توفر المنتج في المخزن <span class="req">*</span></label>
               <select id="editProdAvailable" class="form-control" required>
                 <option value="true">متوفر في المخزن للطلب فوراً ✅</option>
@@ -1795,7 +1911,8 @@
       </div>
       <span class="nav-text">السلة</span>
     </button>
-    <button class="bottom-nav-item" id="mobNavAdmin" onclick="openAdminPanel()">
+    <!-- Mobile Nav Admin (Hidden by default for non-admins) -->
+    <button class="bottom-nav-item" id="mobNavAdmin" onclick="openAdminPanel()" style="display: none;">
       <span class="nav-icon">⚙️</span>
       <span class="nav-text">الإدارة</span>
     </button>
@@ -1874,7 +1991,12 @@
     <div class="footer-bottom-bar">
       <div class="container footer-bottom-content">
         <p>© 2026 جميع الحقوق محفوظة لمتجر <strong>عالم اسما - Asma World</strong> للأجهزة المنزلية.</p>
-        <p class="footer-credit">تم التطوير بأحدث معايير الويب الفائقة السرعة ⚡</p>
+        <div class="footer-bottom-actions">
+          <button type="button" class="footer-admin-link" id="footerAdminLink" onclick="handleAdminPortalClick()">
+            <span>🔐 بوابة الإدارة</span>
+          </button>
+          <span class="footer-credit">تم التطوير بأحدث معايير الويب الفائقة السرعة ⚡</span>
+        </div>
       </div>
     </div>
   </footer>

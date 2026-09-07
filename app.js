@@ -53,6 +53,11 @@ const AppState = {
   currentReceiptOrder: null,
 };
 
+// Admin Authentication State
+const AuthState = {
+  currentUser: null // { username: 'admin', role: 'admin', is_admin: true, name: 'مدير عالم اسما' }
+};
+
 // --------------------------------------------------------------------------
 // 1. Initial Categories & Appliance Products Catalog
 // --------------------------------------------------------------------------
@@ -64,12 +69,97 @@ const INITIAL_CATEGORIES = [
   { id: 'tvs', name: 'شاشات وتلفزيونات', icon: '📺' }
 ];
 
-const INITIAL_PRODUCTS = [];
+const INITIAL_PRODUCTS = [
+  {
+    id: 'prod-demo-1',
+    title: 'ثلاجة ال جي 20 قدم نوفروست إنفرتر سيلفر - شاشة ديجيتال',
+    category: 'refrigerators',
+    price: 34500,
+    oldPrice: 38900,
+    stock_quantity: 3, // الشرط الأول: < 5 و > 0
+    depositAmount: 6900,
+    shippingFee: 0,
+    isAvailable: true,
+    badge: 'خصم حصري',
+    images: [
+      'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=800&q=80'
+    ],
+    primaryImageIndex: 0,
+    image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=800&q=80',
+    youtubeId: 'W0jLgUu29uU',
+    specs: ['سعة 20 قدم نوفروست كامل', 'ضاغط إنفرتر خطي موفر للطاقة 40%', 'تدفق هواء متعدد الاتجاهات Multi Air Flow', 'ضمان 10 سنوات من الوكيل'],
+    description: 'ثلاجة ال جي المبتكرة مع تقنية DoorCooling+ لتبريد أسرع وأكثر تجانساً بنسبة 35%، وحفظ الأطعمة طازجة لفترات أطول بكثير.'
+  },
+  {
+    id: 'prod-demo-2',
+    title: 'بوتجاز فريش بلازا 5 شعلة 60×90 أمان كامل مروحة تبريد',
+    category: 'cookers',
+    price: 14800,
+    oldPrice: 16500,
+    stock_quantity: 12, // الشرط الثاني: >= 5
+    depositAmount: 2960,
+    shippingFee: 150,
+    isAvailable: true,
+    badge: 'الأكثر مبيعاً',
+    images: [
+      'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80'
+    ],
+    primaryImageIndex: 0,
+    image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80',
+    youtubeId: 'W0jLgUu29uU',
+    specs: ['5 شعلة ساباف إيطالية أصلية', 'نظام أمان كامل 100% للفرن والسطح', 'مروحة توزيع حراري داخل الفرن', 'إشعال ذاتي متكامل للشعلات والفرن'],
+    description: 'بوتجاز فريش بلازا الاحترافي يمنحك تجربة طهي مثالية مع خاصية الأمان الكامل وعزل حراري مزدوج لأقصى درجات الأمان في مطبخك.'
+  },
+  {
+    id: 'prod-demo-3',
+    title: 'غسالة زانوسي أوتوماتيك 8 كيلو إنفرتر سيلفر - بخار ProSteam',
+    category: 'washers',
+    price: 21500,
+    oldPrice: null,
+    stock_quantity: 0, // الشرط الثالث: == 0 نفاذ الكمية
+    depositAmount: 4300,
+    shippingFee: 0,
+    isAvailable: false,
+    badge: null,
+    images: [
+      'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?auto=format&fit=crop&w=800&q=80'
+    ],
+    primaryImageIndex: 0,
+    image: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=800&q=80',
+    youtubeId: null,
+    specs: ['سعة 8 كجم عصر 1400 لفة في الدقيقة', 'موتور إنفرتر هادئ للغاية ومعمر', 'برنامج غسيل بالبخار لتعقيم الملابس', 'برنامج سريع 15 دقيقة للحمولات الخفيفة'],
+    description: 'غسالة زانوسي بيرفكت كير بتقنية البخار المتطورة التي تزيل التجاعيد وتعقم الملابس بنسبة 99.9% مع توفير فائق لاستهلاك المياه والكهرباء.'
+  },
+  {
+    id: 'prod-demo-4',
+    title: 'قلاية هوائية فيليبس ديجيتال XXL سعة 7 لتر 2000 واط تاتش',
+    category: 'kitchen-appliances',
+    price: 6900,
+    oldPrice: 8200,
+    stock_quantity: 2, // الشرط الأول: < 5 و > 0
+    depositAmount: 1380,
+    shippingFee: 75,
+    isAvailable: true,
+    badge: 'عروض اليوم',
+    images: [
+      'https://images.unsplash.com/photo-1585659722983-3a675dabf23d?auto=format&fit=crop&w=800&q=80'
+    ],
+    primaryImageIndex: 0,
+    image: 'https://images.unsplash.com/photo-1585659722983-3a675dabf23d?auto=format&fit=crop&w=800&q=80',
+    youtubeId: 'W0jLgUu29uU',
+    specs: ['سعة XXL تكفي عائلة كاملة (7.2 لتر)', 'تقنية Rapid Air لقلي صحي بدهون أقل 90%', 'شاشة لمس ذكية مع 16 برنامج طهي مسبق', 'وعاء غير لاصق قابل للغسل بغسالة الأطباق'],
+    description: 'قلاية هوائية فيليبس الأصلية تضمن لك طعاماً مقرمشاً من الخارج وطرياً من الداخل بأقل قطرة زيت ممكنة، صحية ومثالية لكل عائلة.'
+  }
+];
 
 // --------------------------------------------------------------------------
 // 2. Application Initialization & Storage Sync
 // --------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
+  initAuth();
   initStorage();
   initEventListeners();
   renderCategoryNav();
@@ -82,6 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateAdminProductsTable();
   updateAdminCategoriesTable();
   updateAdminAnalytics();
+  updateAuthUI();
+  checkRouteAuth();
+  window.addEventListener('hashchange', checkRouteAuth);
 });
 
 function initStorage() {
@@ -102,30 +195,20 @@ function initStorage() {
     AppState.categories = [...INITIAL_CATEGORIES];
   }
 
-  // Version check: reset previous dummy products once to give user a clean slate
-  const catalogVersion = localStorage.getItem('asma_catalog_version');
-  if (catalogVersion !== 'v3_clean') {
-    localStorage.removeItem('asma_products_catalog');
-    localStorage.removeItem('asma_cart');
-    localStorage.setItem('asma_catalog_version', 'v3_clean');
-    AppState.products = [];
-    AppState.cart = [];
-  } else {
-    // Load Products Catalog from localStorage
-    const savedProducts = localStorage.getItem('asma_products_catalog');
-    if (savedProducts) {
-      try {
-        const parsed = JSON.parse(savedProducts);
-        AppState.products = Array.isArray(parsed) ? parsed : [];
-      } catch (e) {
-        AppState.products = [];
-      }
-    } else {
-      AppState.products = [];
+  // Load Products Catalog from localStorage
+  const savedProducts = localStorage.getItem('asma_products_catalog');
+  if (savedProducts) {
+    try {
+      const parsed = JSON.parse(savedProducts);
+      AppState.products = (Array.isArray(parsed) && parsed.length > 0) ? parsed : [...INITIAL_PRODUCTS];
+    } catch (e) {
+      AppState.products = [...INITIAL_PRODUCTS];
     }
+  } else {
+    AppState.products = [...INITIAL_PRODUCTS];
   }
 
-  // Ensure all products have images array, primaryImageIndex, isAvailable, depositAmount, and shippingFee defaults
+  // Ensure all products have images array, primaryImageIndex, stock_quantity, isAvailable, depositAmount, and shippingFee defaults
   AppState.products = AppState.products.map(p => {
     const galleryImages = (Array.isArray(p.images) && p.images.length > 0)
       ? p.images.filter(Boolean)
@@ -134,6 +217,10 @@ function initStorage() {
       ? p.primaryImageIndex
       : 0;
     const primaryImg = galleryImages[primaryIdx] || p.image || '';
+    const stockQty = (p.stock_quantity !== undefined && p.stock_quantity !== null && p.stock_quantity !== '')
+      ? Number(p.stock_quantity)
+      : (p.isAvailable === false ? 0 : 10);
+    const isAvail = stockQty > 0 && p.isAvailable !== false;
 
     return {
       ...p,
@@ -141,7 +228,8 @@ function initStorage() {
       primaryImageIndex: primaryIdx,
       image: primaryImg,
       price: Number(p.price) || 0,
-      isAvailable: p.isAvailable !== false,
+      stock_quantity: stockQty,
+      isAvailable: isAvail,
       shippingFee: (p.shippingFee !== undefined && p.shippingFee !== null && p.shippingFee !== '')
         ? Number(p.shippingFee)
         : 0,
@@ -1113,7 +1201,10 @@ function renderProducts() {
 
   grid.innerHTML = filtered.map(prod => {
     if (!prod) return '';
-    const isOut = prod.isAvailable === false;
+    const stockQuantity = (prod.stock_quantity !== undefined && prod.stock_quantity !== null && prod.stock_quantity !== '')
+      ? Number(prod.stock_quantity)
+      : (prod.isAvailable === false ? 0 : 10);
+    const isOut = stockQuantity === 0 || prod.isAvailable === false;
     const depositAmount = getProductDeposit(prod);
     const shippingAmount = getProductShipping(prod);
     const remainingAmount = Math.max(0, prod.price - depositAmount);
@@ -1121,7 +1212,9 @@ function renderProducts() {
     // Badge styling
     let badgeHtml = '';
     if (isOut) {
-      badgeHtml = `<span class="card-badge-tag badge-out-of-stock">🚫 غير متوفر حالياً بالمخزن</span>`;
+      badgeHtml = `<span class="card-badge-tag badge-out-of-stock">🚫 غير متوفر حالياً</span>`;
+    } else if (stockQuantity < 5) {
+      badgeHtml = `<span class="card-badge-tag badge-low-stock">🔥 متبقي ${stockQuantity} قطع فقط!</span>`;
     } else if (prod.badge) {
       let badgeClass = 'badge-bestseller';
       if (prod.badge === 'خصم حصري' || (prod.oldPrice && prod.oldPrice > prod.price)) badgeClass = 'badge-discount';
@@ -1189,7 +1282,7 @@ function renderProducts() {
                 class="btn-add-cart btn-out-of-stock" 
                 disabled
               >
-                <span>🚫 غير متوفر حالياً بالمخزن</span>
+                <span>🚫 غير متوفر حالياً</span>
               </button>
             ` : `
               <button 
@@ -1314,13 +1407,18 @@ function renderNewlyAddedProducts() {
 
   track.innerHTML = newlyAdded.map(prod => {
     if (!prod) return '';
-    const isOut = prod.isAvailable === false;
+    const stockQuantity = (prod.stock_quantity !== undefined && prod.stock_quantity !== null && prod.stock_quantity !== '')
+      ? Number(prod.stock_quantity)
+      : (prod.isAvailable === false ? 0 : 10);
+    const isOut = stockQuantity === 0 || prod.isAvailable === false;
     const shippingAmount = getProductShipping(prod);
     const catName = getCategoryName(prod.category);
 
     let leftBadgeHtml = '';
     if (isOut) {
       leftBadgeHtml = `<span class="card-badge-tag badge-out-of-stock badge-top-left">🚫 غير متوفر</span>`;
+    } else if (stockQuantity < 5) {
+      leftBadgeHtml = `<span class="card-badge-tag badge-low-stock badge-top-left">🔥 متبقي ${stockQuantity} فقط</span>`;
     } else if (prod.badge === 'خصم حصري' || (prod.oldPrice && prod.oldPrice > prod.price)) {
       leftBadgeHtml = `<span class="card-badge-tag badge-discount badge-top-left">🔥 خصم حصري</span>`;
     } else if (prod.badge && prod.badge !== 'جديد') {
@@ -1497,8 +1595,12 @@ function addToCart(productId) {
   const prod = AppState.products.find(p => p && p.id === productId);
   if (!prod) return;
 
-  if (prod.isAvailable === false) {
-    showToast(`عذراً، جهاز "${prod.title.slice(0, 25)}..." غير متوفر حالياً في المخزن! 🚫`, 'warning');
+  const stockQuantity = (prod.stock_quantity !== undefined && prod.stock_quantity !== null && prod.stock_quantity !== '')
+    ? Number(prod.stock_quantity)
+    : (prod.isAvailable === false ? 0 : 10);
+
+  if (prod.isAvailable === false || stockQuantity === 0) {
+    showToast(`عذراً، هذا الجهاز غير متوفر حالياً في المخزن! 🚫`, 'warning');
     return;
   }
 
@@ -2176,11 +2278,57 @@ function openQuickView(productId) {
   const content = document.getElementById('quickViewContent');
   if (!content) return;
 
-  const isOut = prod.isAvailable === false;
+  const stockQuantity = (prod.stock_quantity !== undefined && prod.stock_quantity !== null && prod.stock_quantity !== '')
+    ? Number(prod.stock_quantity)
+    : (prod.isAvailable === false ? 0 : 10);
+  const isOut = stockQuantity === 0 || prod.isAvailable === false;
   const deposit = getProductDeposit(prod);
   const shipping = getProductShipping(prod);
   const remaining = Math.max(0, prod.price - deposit);
   const catName = getCategoryName(prod.category);
+
+  // ---------------------------------------------------------
+  // منطق شرطي (Conditional Logic) لعنصر المخزون في صفحة المنتج:
+  // 1. الشرط الأول (الكمية أقل من 5 ويزيد عن 0):
+  //    عرض عدد القطع المتبقية بخط واضح مع الرسالة التحفيزية
+  //    "متبقي [عدد القطع] قطع فقط! اطلب الآن قبل نفاذ الكمية" بلون تنبيهي ملفت
+  // 2. الشرط الثاني (الكمية 5 أو أكثر):
+  //    إخفاء رقم المخزن والرسالة تماماً من واجهة المستخدم دون أي بيان
+  // 3. حالة نفاذ الكمية (0 قطعة):
+  //    عرض نص "غير متوفر حالياً" مع تعطيل زر الشراء
+  // ---------------------------------------------------------
+  let stockAlertHtml = '';
+  if (stockQuantity === 0) {
+    // حالة نفاذ الكمية (0 قطعة)
+    stockAlertHtml = `
+      <div class="qv-stock-alert qv-stock-out" id="qvStockAlert">
+        <div class="qv-stock-content-row">
+          <div class="qv-stock-icon-wrap">🚫</div>
+          <div class="qv-stock-text-col">
+            <strong class="qv-stock-title">غير متوفر حالياً</strong>
+            <span class="qv-stock-msg">نفذت جميع القطع المتاحة من هذا الجهاز في المخزن حالياً.</span>
+          </div>
+        </div>
+      </div>
+    `;
+  } else if (stockQuantity < 5 && stockQuantity > 0) {
+    // الشرط الأول: الكمية أقل من 5 ويزيد عن 0
+    stockAlertHtml = `
+      <div class="qv-stock-alert qv-stock-low" id="qvStockAlert">
+        <div class="qv-stock-content-row">
+          <div class="qv-stock-icon-wrap"><span class="pulse-flame">🔥</span></div>
+          <div class="qv-stock-text-col">
+            <strong class="qv-stock-title">متبقي <span class="stock-qty-number">${stockQuantity}</span> قطع فقط! اطلب الآن قبل نفاذ الكمية</strong>
+            <span class="qv-stock-msg">⚡ إقبال كبير على هذا الموديل، سارع بحجز نسختك لتأكيد التوصيل قبل انتهاء المخزون.</span>
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    // الشرط الثاني: الكمية 5 أو أكثر
+    // يتم إخفاء رقم المخزن والرسالة تماماً من واجهة المستخدم، ولا يظهر أي بيان
+    stockAlertHtml = '';
+  }
 
   // Extract gallery images and primary index
   const gallery = (Array.isArray(prod.images) && prod.images.length > 0)
@@ -2195,7 +2343,9 @@ function openQuickView(productId) {
 
   let badgeHtml = '';
   if (isOut) {
-    badgeHtml = `<span class="card-badge-tag badge-out-of-stock">🚫 غير متوفر حالياً بالمخزن</span>`;
+    badgeHtml = `<span class="card-badge-tag badge-out-of-stock">🚫 غير متوفر حالياً</span>`;
+  } else if (stockQuantity < 5) {
+    badgeHtml = `<span class="card-badge-tag badge-low-stock">🔥 متبقي ${stockQuantity} قطع فقط!</span>`;
   } else if (prod.badge) {
     let badgeClass = 'badge-bestseller';
     if (prod.badge === 'خصم حصري' || (prod.oldPrice && prod.oldPrice > prod.price)) badgeClass = 'badge-discount';
@@ -2413,10 +2563,14 @@ function openQuickView(productId) {
           <div class="qv-header-info">
             <div class="qv-meta-tags">
               <span class="qv-cat-badge">🏷️ قسم: ${catName}</span>
+              ${stockQuantity === 0 ? `<span class="qv-stock-badge out-of-stock">🚫 غير متوفر حالياً</span>` : ''}
             </div>
 
             <h1 class="qv-product-title">${prod.title}</h1>
           </div>
+
+          <!-- تنبيه حالة المخزون المشروط (Conditional Stock Urgency Alert) -->
+          ${stockAlertHtml}
 
           <!-- Prominent Total Price Display -->
           <div class="qv-total-price-hero">
@@ -2503,7 +2657,7 @@ function openQuickView(productId) {
                 class="btn-add-cart btn-out-of-stock btn-qv-add-cart" 
                 disabled
               >
-                <span>🚫 غير متوفر حالياً بالمخزن</span>
+                <span>🚫 غير متوفر حالياً</span>
               </button>
             ` : `
               <button 
@@ -2778,7 +2932,10 @@ function updateAdminProductsTable() {
 
   tbody.innerHTML = list.map(prod => {
     if (!prod) return '';
-    const isAvailable = prod.isAvailable !== false;
+    const stockQuantity = (prod.stock_quantity !== undefined && prod.stock_quantity !== null && prod.stock_quantity !== '')
+      ? Number(prod.stock_quantity)
+      : (prod.isAvailable === false ? 0 : 10);
+    const isAvailable = stockQuantity > 0 && prod.isAvailable !== false;
     const catName = getCategoryName(prod.category);
     const deposit = getProductDeposit(prod);
     const shipping = getProductShipping(prod);
@@ -2793,6 +2950,15 @@ function updateAdminProductsTable() {
         </td>
         <td>${catName}</td>
         <td><strong>${formatMoney(prod.price)} ج.م</strong></td>
+        <td>
+          ${stockQuantity === 0 ? `
+            <span class="stock-badge-pill stock-pill-zero">0 (نفذت) 🚫</span>
+          ` : stockQuantity < 5 ? `
+            <span class="stock-badge-pill stock-pill-low">${stockQuantity} قطع (منخفض 🔥)</span>
+          ` : `
+            <span class="stock-badge-pill stock-pill-ok">${stockQuantity} قطعة ✅</span>
+          `}
+        </td>
         <td><span class="text-green font-bold">${formatMoney(deposit)} ج.م</span></td>
         <td><span>${shipping > 0 ? `${formatMoney(shipping)} ج.م` : 'مجاناً'}</span></td>
         <td>
@@ -2840,15 +3006,23 @@ function toggleProductAvailability(productId) {
   const prod = AppState.products.find(p => p && p.id === productId);
   if (!prod) return;
 
-  prod.isAvailable = !(prod.isAvailable !== false);
+  const willBeAvailable = !(prod.isAvailable !== false && Number(prod.stock_quantity) > 0);
+  prod.isAvailable = willBeAvailable;
+  if (willBeAvailable) {
+    if (!prod.stock_quantity || prod.stock_quantity <= 0) {
+      prod.stock_quantity = 10;
+    }
+  } else {
+    prod.stock_quantity = 0;
+  }
   saveProductsToStorage();
 
   renderProducts();
   renderNewlyAddedProducts();
   updateAdminProductsTable();
 
-  const msg = prod.isAvailable 
-    ? `تم تفعيل توفر الجهاز في المخزن ✅` 
+  const msg = willBeAvailable 
+    ? `تم تفعيل توفر الجهاز في المخزن (${prod.stock_quantity} قطع) ✅` 
     : `تم تعيين الجهاز كـ "غير متوفر حالياً بالمخزن" 🚫`;
   showToast(msg, 'info');
 }
@@ -3179,6 +3353,7 @@ function openEditProductModal(productId) {
   const editProdOldPrice = document.getElementById('editProdOldPrice');
   const editProdDeposit = document.getElementById('editProdDeposit');
   const editProdShipping = document.getElementById('editProdShipping');
+  const editProdStockQuantity = document.getElementById('editProdStockQuantity');
   const editProdAvailable = document.getElementById('editProdAvailable');
   const editProdBadge = document.getElementById('editProdBadge');
   const editProdYt = document.getElementById('editProdYt');
@@ -3191,7 +3366,11 @@ function openEditProductModal(productId) {
   if (editProdOldPrice) editProdOldPrice.value = prod.oldPrice || '';
   if (editProdDeposit) editProdDeposit.value = prod.depositAmount || '';
   if (editProdShipping) editProdShipping.value = prod.shippingFee !== undefined ? prod.shippingFee : 0;
-  if (editProdAvailable) editProdAvailable.value = prod.isAvailable !== false ? 'true' : 'false';
+  const currentStock = (prod.stock_quantity !== undefined && prod.stock_quantity !== null)
+    ? prod.stock_quantity
+    : (prod.isAvailable === false ? 0 : 10);
+  if (editProdStockQuantity) editProdStockQuantity.value = currentStock;
+  if (editProdAvailable) editProdAvailable.value = (prod.isAvailable !== false && currentStock > 0) ? 'true' : 'false';
   if (editProdBadge) editProdBadge.value = prod.badge || '';
   if (editProdYt) editProdYt.value = prod.youtubeId || '';
   if (editProdSpecs) editProdSpecs.value = prod.specs ? prod.specs.join(', ') : '';
@@ -3226,7 +3405,9 @@ function handleEditProductSubmit(e) {
   const oldPrice = parseFloat(document.getElementById('editProdOldPrice')?.value) || null;
   const depositVal = parseFloat(document.getElementById('editProdDeposit')?.value);
   const shippingVal = parseFloat(document.getElementById('editProdShipping')?.value);
-  const isAvailable = document.getElementById('editProdAvailable')?.value === 'true';
+  const stockQuantityVal = parseInt(document.getElementById('editProdStockQuantity')?.value, 10);
+  const stockQuantity = !isNaN(stockQuantityVal) && stockQuantityVal >= 0 ? stockQuantityVal : 0;
+  const isAvailable = document.getElementById('editProdAvailable')?.value === 'true' && stockQuantity > 0;
   const badge = document.getElementById('editProdBadge')?.value || null;
   const ytInput = document.getElementById('editProdYt')?.value.trim() || '';
   const specsStr = document.getElementById('editProdSpecs')?.value.trim() || '';
@@ -3256,6 +3437,7 @@ function handleEditProductSubmit(e) {
   prod.category = category;
   prod.price = price;
   prod.oldPrice = oldPrice;
+  prod.stock_quantity = stockQuantity;
   prod.depositAmount = !isNaN(depositVal) && depositVal > 0 ? depositVal : Math.round(price * 0.20);
   prod.shippingFee = !isNaN(shippingVal) && shippingVal >= 0 ? shippingVal : 0;
   prod.isAvailable = isAvailable;
@@ -3300,7 +3482,9 @@ function handleAddProductSubmit(e) {
   const oldPrice = parseFloat(document.getElementById('newProdOldPrice')?.value) || null;
   const depositVal = parseFloat(document.getElementById('newProdDeposit')?.value);
   const shippingVal = parseFloat(document.getElementById('newProdShipping')?.value);
-  const isAvailable = document.getElementById('newProdAvailable')?.value === 'true';
+  const stockQuantityVal = parseInt(document.getElementById('newProdStockQuantity')?.value, 10);
+  const stockQuantity = !isNaN(stockQuantityVal) && stockQuantityVal >= 0 ? stockQuantityVal : 10;
+  const isAvailable = document.getElementById('newProdAvailable')?.value === 'true' && stockQuantity > 0;
   const badge = document.getElementById('newProdBadge')?.value;
   const youtubeInput = document.getElementById('newProdYt')?.value.trim() || '';
   const specsStr = document.getElementById('newProdSpecs')?.value.trim() || '';
@@ -3331,6 +3515,7 @@ function handleAddProductSubmit(e) {
     category,
     price,
     oldPrice,
+    stock_quantity: stockQuantity,
     depositAmount: !isNaN(depositVal) && depositVal > 0 ? depositVal : Math.round(price * 0.20),
     shippingFee: !isNaN(shippingVal) && shippingVal >= 0 ? shippingVal : 0,
     isAvailable,
@@ -3907,7 +4092,7 @@ function initEventListeners() {
   if (adminResetCatalogBtn) {
     adminResetCatalogBtn.addEventListener('click', () => {
       if (confirm('هل ترغب في تفريغ كافة الأجهزة وإعادة ضبط الأقسام إلى الوضع الافتراضي؟')) {
-        AppState.products = [];
+        AppState.products = [...INITIAL_PRODUCTS];
         AppState.categories = [...INITIAL_CATEGORIES];
         saveProductsToStorage();
         saveCategoriesToStorage();
@@ -4496,7 +4681,90 @@ function switchAdminTab(targetTabId) {
 }
 window.switchAdminTab = switchAdminTab;
 
+// --------------------------------------------------------------------------
+// 13. Admin Authentication, Access Control & Route Protection
+// --------------------------------------------------------------------------
+function initAuth() {
+  let savedSession = localStorage.getItem('asma_auth_session') || sessionStorage.getItem('asma_auth_session');
+  
+  // تعيين هذا الجهاز تلقائياً كمدير رئيسي بصلاحيات كاملة
+  if (!savedSession) {
+    const defaultMasterAdmin = {
+      username: 'admin',
+      role: 'admin',
+      is_admin: true,
+      name: 'المدير العام (Master Admin)',
+      deviceAuthorized: true,
+      permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'settings'],
+      loginAt: new Date().toISOString()
+    };
+    localStorage.setItem('asma_auth_session', JSON.stringify(defaultMasterAdmin));
+    savedSession = JSON.stringify(defaultMasterAdmin);
+  }
+
+  if (savedSession) {
+    try {
+      const parsed = JSON.parse(savedSession);
+      if (parsed && (parsed.is_admin === true || parsed.role === 'admin')) {
+        parsed.is_admin = true;
+        parsed.role = 'admin';
+        AuthState.currentUser = parsed;
+      } else {
+        AuthState.currentUser = null;
+      }
+    } catch (e) {
+      AuthState.currentUser = null;
+    }
+  } else {
+    AuthState.currentUser = null;
+  }
+  updateAuthUI();
+}
+
+function isAdminAuthenticated() {
+  return Boolean(
+    AuthState.currentUser && 
+    AuthState.currentUser.is_admin === true && 
+    AuthState.currentUser.role === 'admin'
+  );
+}
+window.isAdminAuthenticated = isAdminAuthenticated;
+
+function updateAuthUI() {
+  const isAuth = isAdminAuthenticated();
+  const openAdminBtn = document.getElementById('openAdminBtn');
+  const mobNavAdmin = document.getElementById('mobNavAdmin');
+  const footerAdminLink = document.getElementById('footerAdminLink');
+  const sessionPill = document.getElementById('adminSessionPill');
+
+  if (openAdminBtn) {
+    openAdminBtn.style.display = isAuth ? 'inline-flex' : 'none';
+  }
+  if (mobNavAdmin) {
+    mobNavAdmin.style.display = isAuth ? 'flex' : 'none';
+  }
+  if (footerAdminLink) {
+    footerAdminLink.innerHTML = isAuth 
+      ? '<span>👑 لوحة الإدارة (مسجل كمدير)</span>' 
+      : '<span>🔐 بوابة الإدارة</span>';
+  }
+  if (sessionPill && AuthState.currentUser) {
+    sessionPill.textContent = `👑 مدير معتمد (${AuthState.currentUser.name || 'Admin'})`;
+  }
+}
+window.updateAuthUI = updateAuthUI;
+
 function openAdminPanel(defaultTab = 'productsTab') {
+  // التحقق من الصلاحيات (Role-Based Access) وإعادة التوجيه عند محاولة الدخول دون تصريح
+  if (!isAdminAuthenticated()) {
+    showToast('غير مصرح لك بالوصول لهذه الصفحة! يرجى تسجيل الدخول أولاً كمدير 🚫', 'error');
+    if (window.location.hash === '#admin' || window.location.hash === '#adminPanel' || window.location.hash === '#dashboard') {
+      history.replaceState(null, null, window.location.pathname + window.location.search);
+    }
+    openModal('adminLoginModal');
+    return;
+  }
+
   openModal('adminModal');
   try {
     switchAdminTab(defaultTab);
@@ -4510,6 +4778,114 @@ function openAdminPanel(defaultTab = 'productsTab') {
   }
 }
 window.openAdminPanel = openAdminPanel;
+
+function handleAdminLogin(e) {
+  if (e) e.preventDefault();
+  const usernameInput = document.getElementById('adminUsernameInput');
+  const passwordInput = document.getElementById('adminPasswordInput');
+  const rememberMe = document.getElementById('adminRememberMe')?.checked;
+  const alertBox = document.getElementById('adminLoginAlert');
+
+  const username = (usernameInput?.value || '').trim();
+  const password = (passwordInput?.value || '').trim();
+
+  // بيانات الآدمين المصرح بها
+  const validAdminUsers = ['admin', 'admin@asmaworld.com', 'asma', '01032997502'];
+  const validAdminPasswords = ['admin123', 'admin', 'asma123', 'asma1234', '123456'];
+
+  const isValidUser = validAdminUsers.includes(username.toLowerCase());
+  const isValidPass = validAdminPasswords.includes(password);
+
+  if (isValidUser && isValidPass) {
+    const userSession = {
+      username: username,
+      role: 'admin',
+      is_admin: true,
+      name: 'مدير عالم اسما',
+      loginAt: new Date().toISOString()
+    };
+
+    AuthState.currentUser = userSession;
+    if (rememberMe) {
+      localStorage.setItem('asma_auth_session', JSON.stringify(userSession));
+    } else {
+      sessionStorage.setItem('asma_auth_session', JSON.stringify(userSession));
+      localStorage.setItem('asma_auth_session', JSON.stringify(userSession));
+    }
+
+    if (alertBox) {
+      alertBox.style.display = 'none';
+      alertBox.textContent = '';
+    }
+
+    closeModal('adminLoginModal');
+    updateAuthUI();
+
+    if (usernameInput) usernameInput.value = '';
+    if (passwordInput) passwordInput.value = '';
+
+    showToast('مرحباً بك! تم تسجيل الدخول كمدير للمتجر بنجاح 🎉', 'success');
+    openAdminPanel('productsTab');
+  } else {
+    if (alertBox) {
+      alertBox.style.display = 'block';
+      alertBox.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة! يرجى التأكد من البيانات والمحاولة مجدداً.';
+    }
+    showToast('بيانات الدخول غير صحيحة! يرجى التأكد والمحاولة مجدداً 🚫', 'error');
+  }
+}
+window.handleAdminLogin = handleAdminLogin;
+
+function handleAdminLogout() {
+  if (confirm('هل أنت متأكد من تسجيل الخروج من لوحة الإدارة؟')) {
+    localStorage.removeItem('asma_auth_session');
+    sessionStorage.removeItem('asma_auth_session');
+    AuthState.currentUser = null;
+
+    closeModal('adminModal');
+    closeModal('editProductModal');
+    closeModal('editCategoryModal');
+
+    if (window.location.hash === '#admin' || window.location.hash === '#adminPanel' || window.location.hash === '#dashboard') {
+      history.replaceState(null, null, window.location.pathname + window.location.search);
+    }
+
+    updateAuthUI();
+    showToast('تم تسجيل الخروج من لوحة الإدارة بنجاح 👋', 'info');
+  }
+}
+window.handleAdminLogout = handleAdminLogout;
+
+function handleAdminPortalClick() {
+  if (isAdminAuthenticated()) {
+    openAdminPanel('productsTab');
+  } else {
+    openModal('adminLoginModal');
+  }
+}
+window.handleAdminPortalClick = handleAdminPortalClick;
+
+function togglePasswordVisibility(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  const isPassword = input.type === 'password';
+  input.type = isPassword ? 'text' : 'password';
+  if (btn) btn.textContent = isPassword ? '🙈' : '👁️';
+}
+window.togglePasswordVisibility = togglePasswordVisibility;
+
+function checkRouteAuth() {
+  const hash = window.location.hash;
+  if (hash === '#admin' || hash === '#adminPanel' || hash === '#dashboard') {
+    if (isAdminAuthenticated()) {
+      openAdminPanel('productsTab');
+    } else {
+      history.replaceState(null, null, window.location.pathname + window.location.search);
+      showToast('غير مصرح لك بالوصول لهذه الصفحة! 🚫', 'error');
+      openModal('adminLoginModal');
+    }
+  }
+}
 
 // --------------------------------------------------------------------------
 // 14. Helper Utilities & Masking
