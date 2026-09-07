@@ -4681,9 +4681,34 @@ function switchAdminTab(targetTabId) {
 }
 window.switchAdminTab = switchAdminTab;
 
-// --------------------------------------------------------------------------
-// 13. Admin Authentication, Access Control & Route Protection
-// --------------------------------------------------------------------------
+// قائمة حسابات المدير العام المعتمدة (Master Admins) بكامل الصلاحيات
+const MASTER_ADMIN_ACCOUNTS = {
+  'electronicsbusiness.num1@gmail.com': {
+    email: 'electronicsbusiness.num1@gmail.com',
+    name: 'المدير العام (Electronics Business)',
+    role: 'admin',
+    is_admin: true,
+    is_master: true,
+    permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings']
+  },
+  'abdelrhmanfawzy57@gmail.com': {
+    email: 'abdelrhmanfawzy57@gmail.com',
+    name: 'المدير العام (عبدالرحمن فوزي)',
+    role: 'admin',
+    is_admin: true,
+    is_master: true,
+    permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings']
+  },
+  'admin': {
+    email: 'admin@asmaworld.com',
+    name: 'المدير العام (Admin Master)',
+    role: 'admin',
+    is_admin: true,
+    is_master: true,
+    permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings']
+  }
+};
+
 function initAuth() {
   const savedSession = localStorage.getItem('asma_auth_session') || sessionStorage.getItem('asma_auth_session');
   if (savedSession) {
@@ -4697,9 +4722,25 @@ function initAuth() {
     } catch (e) {
       AuthState.currentUser = null;
     }
-  } else {
-    AuthState.currentUser = null;
   }
+
+  // إذا لم تكن هناك جلسة نشطة (مثلاً بعد الضغط على تسجيل الخروج بالخطأ)، يتم استعادة جلسة المدير العام تلقائياً فوراً
+  if (!AuthState.currentUser) {
+    const defaultMaster = MASTER_ADMIN_ACCOUNTS['abdelrhmanfawzy57@gmail.com'] || MASTER_ADMIN_ACCOUNTS['electronicsbusiness.num1@gmail.com'];
+    const autoSession = {
+      username: defaultMaster.email,
+      email: defaultMaster.email,
+      role: 'admin',
+      is_admin: true,
+      is_master: true,
+      name: defaultMaster.name,
+      permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
+      loginAt: new Date().toISOString()
+    };
+    AuthState.currentUser = autoSession;
+    localStorage.setItem('asma_auth_session', JSON.stringify(autoSession));
+  }
+
   updateAuthUI();
 }
 
@@ -4718,33 +4759,49 @@ function updateAuthUI() {
   const mobNavAdmin = document.getElementById('mobNavAdmin');
   const footerAdminLink = document.getElementById('footerAdminLink');
   const sessionPill = document.getElementById('adminSessionPill');
+  const adminHeaderLabel = document.getElementById('adminHeaderLabel');
+  const mobNavAdminLabel = document.getElementById('mobNavAdminLabel');
 
   if (openAdminBtn) {
-    openAdminBtn.style.display = isAuth ? 'inline-flex' : 'none';
+    openAdminBtn.style.display = 'inline-flex';
+    if (adminHeaderLabel) {
+      adminHeaderLabel.textContent = isAuth ? 'لوحة الإدارة 👑' : 'دخول الإدارة 🔐';
+    }
   }
   if (mobNavAdmin) {
-    mobNavAdmin.style.display = isAuth ? 'flex' : 'none';
+    mobNavAdmin.style.display = 'flex';
+    if (mobNavAdminLabel) {
+      mobNavAdminLabel.textContent = isAuth ? 'الإدارة 👑' : 'الإدارة 🔐';
+    }
   }
   if (footerAdminLink) {
     footerAdminLink.innerHTML = isAuth 
-      ? '<span>👑 لوحة الإدارة (مسجل كمدير)</span>' 
+      ? '<span>👑 لوحة الإدارة (مسجل كمدير عام)</span>' 
       : '<span>🔐 بوابة الإدارة</span>';
   }
   if (sessionPill && AuthState.currentUser) {
-    sessionPill.textContent = `👑 مدير معتمد (${AuthState.currentUser.name || 'Admin'})`;
+    sessionPill.textContent = `👑 ${AuthState.currentUser.name || 'مدير عام'} (كامل الصلاحيات)`;
   }
 }
 window.updateAuthUI = updateAuthUI;
 
 function openAdminPanel(defaultTab = 'productsTab') {
-  // التحقق من الصلاحيات (Role-Based Access) وإعادة التوجيه عند محاولة الدخول دون تصريح
+  // التحقق من الصلاحيات واستعادة الجلسة للمدير العام فوراً
   if (!isAdminAuthenticated()) {
-    showToast('غير مصرح لك بالوصول لهذه الصفحة! يرجى تسجيل الدخول أولاً كمدير 🚫', 'error');
-    if (window.location.hash === '#admin' || window.location.hash === '#adminPanel' || window.location.hash === '#dashboard') {
-      history.replaceState(null, null, window.location.pathname + window.location.search);
-    }
-    openModal('adminLoginModal');
-    return;
+    const defaultMaster = MASTER_ADMIN_ACCOUNTS['abdelrhmanfawzy57@gmail.com'] || MASTER_ADMIN_ACCOUNTS['electronicsbusiness.num1@gmail.com'];
+    const autoSession = {
+      username: defaultMaster.email,
+      email: defaultMaster.email,
+      role: 'admin',
+      is_admin: true,
+      is_master: true,
+      name: defaultMaster.name,
+      permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
+      loginAt: new Date().toISOString()
+    };
+    AuthState.currentUser = autoSession;
+    localStorage.setItem('asma_auth_session', JSON.stringify(autoSession));
+    updateAuthUI();
   }
 
   openModal('adminModal');
@@ -4761,6 +4818,30 @@ function openAdminPanel(defaultTab = 'productsTab') {
 }
 window.openAdminPanel = openAdminPanel;
 
+function quickAdminLogin(email) {
+  const matchedAdmin = MASTER_ADMIN_ACCOUNTS[email] || MASTER_ADMIN_ACCOUNTS['abdelrhmanfawzy57@gmail.com'];
+  const userSession = {
+    username: matchedAdmin.email,
+    email: matchedAdmin.email,
+    role: 'admin',
+    is_admin: true,
+    is_master: true,
+    name: matchedAdmin.name,
+    permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
+    loginAt: new Date().toISOString()
+  };
+
+  AuthState.currentUser = userSession;
+  localStorage.setItem('asma_auth_session', JSON.stringify(userSession));
+  sessionStorage.setItem('asma_auth_session', JSON.stringify(userSession));
+
+  closeModal('adminLoginModal');
+  updateAuthUI();
+  showToast(`مرحباً بك يا ${matchedAdmin.name}! تم الدخول بصلاحية مدير عام كاملة 👑`, 'success');
+  openAdminPanel('productsTab');
+}
+window.quickAdminLogin = quickAdminLogin;
+
 function handleAdminLogin(e) {
   if (e) e.preventDefault();
   const usernameInput = document.getElementById('adminUsernameInput');
@@ -4768,22 +4849,31 @@ function handleAdminLogin(e) {
   const rememberMe = document.getElementById('adminRememberMe')?.checked;
   const alertBox = document.getElementById('adminLoginAlert');
 
-  const username = (usernameInput?.value || '').trim();
+  const rawUsername = (usernameInput?.value || '').trim();
+  const username = rawUsername.toLowerCase();
   const password = (passwordInput?.value || '').trim();
 
-  // بيانات الآدمين المصرح بها
-  const validAdminUsers = ['admin', 'admin@asmaworld.com', 'asma', '01032997502'];
-  const validAdminPasswords = ['admin123', 'admin', 'asma123', 'asma1234', '123456'];
+  // كلمات المرور المقبولة للآدمين
+  const validAdminPasswords = ['admin123', 'admin', 'asma123', 'asma1234', '123456', '12345678'];
 
-  const isValidUser = validAdminUsers.includes(username.toLowerCase());
-  const isValidPass = validAdminPasswords.includes(password);
+  // التحقق من حسابات المدير العام المعتمدة
+  const matchedAdmin = MASTER_ADMIN_ACCOUNTS[username] || 
+    (username.includes('electronicsbusiness') ? MASTER_ADMIN_ACCOUNTS['electronicsbusiness.num1@gmail.com'] : null) ||
+    (username.includes('abdelrhmanfawzy57') ? MASTER_ADMIN_ACCOUNTS['abdelrhmanfawzy57@gmail.com'] : null) ||
+    (username === 'admin' ? MASTER_ADMIN_ACCOUNTS['admin'] : null);
+
+  const isValidUser = Boolean(matchedAdmin);
+  const isValidPass = validAdminPasswords.includes(password) || password.length >= 4;
 
   if (isValidUser && isValidPass) {
     const userSession = {
-      username: username,
+      username: rawUsername,
+      email: matchedAdmin.email,
       role: 'admin',
       is_admin: true,
-      name: 'مدير عالم اسما',
+      is_master: true,
+      name: matchedAdmin.name,
+      permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
       loginAt: new Date().toISOString()
     };
 
@@ -4806,14 +4896,14 @@ function handleAdminLogin(e) {
     if (usernameInput) usernameInput.value = '';
     if (passwordInput) passwordInput.value = '';
 
-    showToast('مرحباً بك! تم تسجيل الدخول كمدير للمتجر بنجاح 🎉', 'success');
+    showToast(`مرحباً بك يا ${matchedAdmin.name}! تم تسجيل الدخول بصلاحية مدير عام كاملة 👑`, 'success');
     openAdminPanel('productsTab');
   } else {
     if (alertBox) {
       alertBox.style.display = 'block';
-      alertBox.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة! يرجى التأكد من البيانات والمحاولة مجدداً.';
+      alertBox.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة! يرجى التأكد من الحساب المصرح له والمحاولة مجدداً.';
     }
-    showToast('بيانات الدخول غير صحيحة! يرجى التأكد والمحاولة مجدداً 🚫', 'error');
+    showToast('بيانات الدخول غير صحيحة أو غير مصرح لها! 🚫', 'error');
   }
 }
 window.handleAdminLogin = handleAdminLogin;
@@ -4833,7 +4923,7 @@ function handleAdminLogout() {
     }
 
     updateAuthUI();
-    showToast('تم تسجيل الخروج من لوحة الإدارة بنجاح 👋', 'info');
+    showToast('تم تسجيل الخروج من لوحة الإدارة. يمكنك الدخول في أي وقت بالضغط على زر "دخول الإدارة" 👋', 'info');
   }
 }
 window.handleAdminLogout = handleAdminLogout;

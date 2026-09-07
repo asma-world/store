@@ -9051,4 +9051,60 @@ html, body {
   border-color: rgba(255, 255, 255, 0.35);
 }
 
+/* Header Admin Button Styling */
+.btn-admin-header {
+  display: inline-flex !important;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+  color: #F8FAFC !important;
+  border: 1.5px solid #334155;
+  padding: 6px 14px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-admin-header:hover {
+  background: linear-gradient(135deg, #0F172A 0%, #020617 100%);
+  color: #F59E0B !important;
+  border-color: #F59E0B;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-admin-header .action-icon {
+  font-size: 15px;
+}
+
+/* Quick Admin Login Buttons in Modal */
+.btn-quick-admin-login {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: right;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-quick-admin-login:hover {
+  background: #EFF6FF;
+  border-color: #3B82F6;
+  color: #1D4ED8;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.15);
+}
+
 

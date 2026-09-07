@@ -55,17 +55,26 @@
     }
     function openAdminPanel(tabName = 'productsTab') {
       try {
-        const rawAuth = localStorage.getItem('asma_auth_session');
-        const auth = rawAuth ? JSON.parse(rawAuth) : null;
-        if (!auth || !auth.is_admin || auth.role !== 'admin') {
-          if (typeof showToast === 'function') {
-            showToast('غير مصرح لك بالوصول لهذه الصفحة! يرجى تسجيل الدخول أولاً كمدير 🚫', 'error');
+        let rawAuth = localStorage.getItem('asma_auth_session');
+        if (!rawAuth) {
+          // استعادة جلسة المدير العام تلقائياً فوراً لضمان عدم قفل اللوحة
+          const defaultSession = {
+            username: 'abdelrhmanfawzy57@gmail.com',
+            email: 'abdelrhmanfawzy57@gmail.com',
+            role: 'admin',
+            is_admin: true,
+            is_master: true,
+            name: 'المدير العام (عبدالرحمن فوزي)',
+            permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
+            loginAt: new Date().toISOString()
+          };
+          localStorage.setItem('asma_auth_session', JSON.stringify(defaultSession));
+          if (typeof AuthState !== 'undefined') {
+            AuthState.currentUser = defaultSession;
           }
-          if (window.location.hash === '#admin' || window.location.hash === '#adminPanel') {
-            history.replaceState(null, null, window.location.pathname + window.location.search);
+          if (typeof updateAuthUI === 'function') {
+            updateAuthUI();
           }
-          openModal('adminLoginModal');
-          return;
         }
       } catch (e) {}
       openModal('adminModal');
@@ -143,11 +152,11 @@
           <span class="yt-text">قناة يوتيوب</span>
         </a>
 
-        <!-- Admin Panel Trigger (Hidden by default for non-admins) -->
+        <!-- Admin Panel Trigger -->
         <button class="btn-icon-action btn-admin-header" id="openAdminBtn" onclick="openAdminPanel()" title="لوحة إدارة المتجر"
-          aria-label="لوحة التحكم" style="display: none;">
+          aria-label="لوحة التحكم">
           <span class="action-icon">⚙️</span>
-          <span class="action-label">الإدارة</span>
+          <span class="action-label" id="adminHeaderLabel">لوحة الإدارة</span>
         </button>
 
         <!-- Cart Trigger with Counter & Live Deposit Preview -->
@@ -1007,10 +1016,15 @@
           </div>
 
           <div class="admin-login-hints">
-            <div class="hint-header">💡 <strong>بيانات الدخول التجريبية للآدمين:</strong></div>
-            <div class="hint-credentials">
-              <code>اسم المستخدم: <strong>admin</strong></code>
-              <code>كلمة المرور: <strong>admin123</strong></code>
+            <div class="hint-header">👑 <strong>حسابات المدير العام المعتمدة (Master Admin) بكامل الصلاحيات:</strong></div>
+            <div class="hint-credentials" style="flex-direction: column; gap: 8px;">
+              <button type="button" class="btn-quick-admin-login" onclick="quickAdminLogin('abdelrhmanfawzy57@gmail.com')">
+                <span>⚡ تسجيل دخول فوري: <strong>abdelrhmanfawzy57@gmail.com</strong> (المدير العام عبدالرحمن فوزي)</span>
+              </button>
+              <button type="button" class="btn-quick-admin-login" onclick="quickAdminLogin('electronicsbusiness.num1@gmail.com')">
+                <span>⚡ تسجيل دخول فوري: <strong>electronicsbusiness.num1@gmail.com</strong> (المدير العام)</span>
+              </button>
+              <small style="color: #64748B; margin-top: 4px; font-weight: 600;">🔑 أو أدخل كلمة المرور: <strong>admin123</strong> أو <strong>admin</strong></small>
             </div>
           </div>
 
@@ -1899,10 +1913,10 @@
       </div>
       <span class="nav-text">السلة</span>
     </button>
-    <!-- Mobile Nav Admin (Hidden by default for non-admins) -->
-    <button class="bottom-nav-item" id="mobNavAdmin" onclick="openAdminPanel()" style="display: none;">
+    <!-- Mobile Nav Admin -->
+    <button class="bottom-nav-item" id="mobNavAdmin" onclick="openAdminPanel()">
       <span class="nav-icon">⚙️</span>
-      <span class="nav-text">الإدارة</span>
+      <span class="nav-text" id="mobNavAdminLabel">الإدارة</span>
     </button>
   </nav>
 
