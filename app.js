@@ -53,11 +53,6 @@ const AppState = {
   currentReceiptOrder: null,
 };
 
-// Admin Authentication State
-const AuthState = {
-  currentUser: null // { username: 'admin', role: 'admin', is_admin: true, name: 'مدير عالم اسما' }
-};
-
 // --------------------------------------------------------------------------
 // 1. Initial Categories & Appliance Products Catalog
 // --------------------------------------------------------------------------
@@ -159,7 +154,6 @@ const INITIAL_PRODUCTS = [
 // 2. Application Initialization & Storage Sync
 // --------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  initAuth();
   initStorage();
   initEventListeners();
   renderCategoryNav();
@@ -172,9 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
   updateAdminProductsTable();
   updateAdminCategoriesTable();
   updateAdminAnalytics();
-  updateAuthUI();
-  checkRouteAuth();
-  window.addEventListener('hashchange', checkRouteAuth);
 });
 
 function initStorage() {
@@ -1228,7 +1219,7 @@ function renderProducts() {
     return `
       <article class="product-card ${isOut ? 'out-of-stock' : ''}" data-id="${prod.id}">
         
-        <div class="product-card-top">
+        <div class="product-card-top" onclick="openQuickView('${prod.id}')" style="cursor:pointer;" title="انقر للمعاينة السريعة للجهاز">
           ${badgeHtml}
           
           <img 
@@ -1244,7 +1235,7 @@ function renderProducts() {
               <button 
                 type="button" 
                 class="btn-card-icon" 
-                onclick="openYouTubeModal('${prod.youtubeId}', '${escapeHtml(prod.title)}', '${prod.id}')" 
+                onclick="event.stopPropagation(); openYouTubeModal('${prod.youtubeId}', '${escapeHtml(prod.title)}', '${prod.id}')" 
                 title="شاهد ريفيو الجهاز على يوتيوب"
                 aria-label="فيديو ريفيو"
               >
@@ -1302,16 +1293,6 @@ function renderProducts() {
             >
               <span>👁️ معاينة سريعة للجهاز</span>
             </button>
-            
-            ${prod.youtubeId ? `
-              <button 
-                type="button" 
-                class="btn-watch-video" 
-                onclick="openYouTubeModal('${prod.youtubeId}', '${escapeHtml(prod.title)}', '${prod.id}')"
-              >
-                <span>🎬 شاهد ريفيو الجهاز</span>
-              </button>
-            ` : ''}
           </div>
         </div>
 
@@ -1429,7 +1410,7 @@ function renderNewlyAddedProducts() {
     return `
       <article class="newly-added-card ${isOut ? 'out-of-stock' : ''}" data-id="${prod.id}">
         
-        <div class="product-card-top">
+        <div class="product-card-top" onclick="openQuickView('${prod.id}')" style="cursor:pointer;" title="انقر للمعاينة السريعة للجهاز">
           <!-- Top Right: New Badge -->
           <span class="badge-newly-added">✨ جديد</span>
 
@@ -1449,7 +1430,7 @@ function renderNewlyAddedProducts() {
               <button 
                 type="button" 
                 class="btn-card-icon" 
-                onclick="openYouTubeModal('${prod.youtubeId}', '${escapeHtml(prod.title)}', '${prod.id}')" 
+                onclick="event.stopPropagation(); openYouTubeModal('${prod.youtubeId}', '${escapeHtml(prod.title)}', '${prod.id}')" 
                 title="شاهد ريفيو الجهاز على يوتيوب"
                 aria-label="فيديو ريفيو"
               >
@@ -2100,12 +2081,18 @@ function renderPrintableReceipt(order) {
   const receiptCustName = document.getElementById('receiptCustName');
   const receiptCustPhone = document.getElementById('receiptCustPhone');
   const receiptCustAddress = document.getElementById('receiptCustAddress');
+  const receiptCustNotes = document.getElementById('receiptCustNotes');
+  const receiptCustNotesItem = document.getElementById('receiptCustNotesItem');
 
   if (receiptOrderId) receiptOrderId.textContent = order.id;
   if (receiptDate) receiptDate.textContent = order.date;
   if (receiptCustName) receiptCustName.textContent = order.customer?.name || '-';
   if (receiptCustPhone) receiptCustPhone.textContent = order.customer?.phone || '-';
   if (receiptCustAddress) receiptCustAddress.textContent = `${order.customer?.governorate || ''} - ${order.customer?.city || ''} - ${order.customer?.address || ''}`;
+  if (receiptCustNotes) {
+    const notes = order.customer?.notes ? order.customer.notes.trim() : '';
+    receiptCustNotes.textContent = notes || 'لا توجد ملاحظات إضافية';
+  }
 
   const tableBody = document.getElementById('receiptItemsTableBody');
   if (tableBody && Array.isArray(order.items)) {
@@ -2161,7 +2148,10 @@ function renderPrintableReceipt(order) {
       : `تم سداد العربون وقدره ${formatMoney(payNow)} ج.م (والمتبقي ${formatMoney(remainingCash)} ج.م كاش عند الاستلام)`;
 
     const itemsSummary = Array.isArray(order.items) ? order.items.map(i => `• ${i.title} (${i.qty} قطع)`).join('\n') : '';
-    const msgText = `مرحباً عالم اسما، أود متابعة طلبي:\n- رقم الطلب: ${order.id}\n- اسم العميل: ${order.customer?.name || ''}\n- الهاتف: ${order.customer?.phone || ''}\n- العنوان: ${order.customer?.governorate || ''} - ${order.customer?.city || ''}\n- الأجهزة المطلوبة:\n${itemsSummary}\n- حالة الدفع: ${payText}\n- إجمالي الفاتورة: ${formatMoney(finalTotal)} ج.م`;
+    const notesText = (order.customer?.notes && order.customer.notes.trim()) 
+      ? `\n- ملاحظات التوصيل: ${order.customer.notes.trim()}` 
+      : '';
+    const msgText = `مرحباً عالم اسما، أود متابعة طلبي:\n- رقم الطلب: ${order.id}\n- اسم العميل: ${order.customer?.name || ''}\n- الهاتف: ${order.customer?.phone || ''}\n- العنوان: ${order.customer?.governorate || ''} - ${order.customer?.city || ''} - ${order.customer?.address || ''}${notesText}\n- الأجهزة المطلوبة:\n${itemsSummary}\n- حالة الدفع: ${payText}\n- إجمالي الفاتورة: ${formatMoney(finalTotal)} ج.م`;
 
     waBtn.href = `https://wa.me/201032997502?text=${encodeURIComponent(msgText)}`;
   }
@@ -2380,7 +2370,7 @@ function openQuickView(productId) {
 
     return `
       <div class="qv-related-card ${relIsOut ? 'out-of-stock' : ''}">
-        <div class="qv-rel-card-top">
+        <div class="qv-rel-card-top" onclick="openQuickView('${rel.id}')" style="cursor:pointer;" title="معاينة تفاصيل هذا الجهاز">
           ${relBadgeHtml}
           <img 
             src="${rel.image}" 
@@ -2393,7 +2383,7 @@ function openQuickView(productId) {
             <button 
               type="button" 
               class="btn-card-icon qv-rel-yt-btn" 
-              onclick="openYouTubeModal('${rel.youtubeId}', '${escapeHtml(rel.title)}', '${rel.id}')"
+              onclick="event.stopPropagation(); openYouTubeModal('${rel.youtubeId}', '${escapeHtml(rel.title)}', '${rel.id}')"
               title="شاهد ريفيو الجهاز بالفيديو"
               aria-label="فيديو ريفيو"
             >
@@ -2649,6 +2639,18 @@ function openQuickView(productId) {
             </div>
           </div>
 
+          <!-- Shipping & Delivery Timeframe Box (تعليمات ومواعيد الشحن) -->
+          <div class="qv-shipping-info-box">
+            <div class="qv-shipping-icon">🚚</div>
+            <div class="qv-shipping-content">
+              <strong class="qv-shipping-highlight">⏱️ يتم استلام الاوردر خلال يومان الي 7 ايام</strong>
+              <p class="qv-shipping-subtext">
+                ${shipping > 0 ? `تكلفة الشحن لهذا الجهاز: <strong>${formatMoney(shipping)} ج.م</strong> لكافة المحافظات.` : '<strong style="color:#059669;">شحن مجاني</strong> لهذا الجهاز.'}
+                يتم التنسيق المباشر مع مندوب الشحن قبل الوصول مع إتاحة الفحص والمعاينة قبل السداد.
+              </p>
+            </div>
+          </div>
+
           <!-- Action Buttons Row -->
           <div class="qv-actions-box">
             ${isOut ? `
@@ -2681,7 +2683,7 @@ function openQuickView(productId) {
           <!-- Trust Badges -->
           <div class="qv-trust-bar">
             <div class="qv-trust-item">🛡️ ضمان الوكيل المعتمد</div>
-            <div class="qv-trust-item">🚚 شحن سريع لكافة المحافظات</div>
+            <div class="qv-trust-item">🚚 استلام خلال 2 إلى 7 أيام</div>
             <div class="qv-trust-item">🔄 الفحص والمعاينة قبل السداد</div>
           </div>
 
@@ -2822,6 +2824,7 @@ function updateAdminOrdersTable() {
     const custName = order.customer?.name || 'عميل';
     const custPhone = order.customer?.phone || '-';
     const custGov = order.customer?.governorate || '-';
+    const custNotes = order.customer?.notes ? `<div style="font-size:11px; color:#C73B8A; font-weight:600; margin-top:2px;">📝 ${escapeHtml(order.customer.notes)}</div>` : '';
 
     return `
       <tr>
@@ -2829,6 +2832,7 @@ function updateAdminOrdersTable() {
         <td>
           <div>${custName}</div>
           <small style="color:var(--text-muted);">${custPhone} - ${custGov}</small>
+          ${custNotes}
         </td>
         <td>${paymentModeLabel}</td>
         <td><strong>${formatMoney(finalTotal)} ج.م</strong></td>
@@ -3834,20 +3838,57 @@ function initEventListeners() {
   // Price Range Popover Toggle & Inputs
   const priceToggleBtn = document.getElementById('priceFilterToggleBtn');
   const pricePopover = document.getElementById('pricePopover');
+  const pricePopoverBackdrop = document.getElementById('pricePopoverBackdrop');
+  const closePricePopoverBtn = document.getElementById('closePricePopoverBtn');
   const priceRangeInput = document.getElementById('priceRangeInput');
   const maxPriceValLabel = document.getElementById('maxPriceValLabel');
   const applyPriceBtn = document.getElementById('applyPriceBtn');
   const resetPriceBtn = document.getElementById('resetPriceBtn');
 
+  const openPricePopover = () => {
+    if (pricePopover) pricePopover.hidden = false;
+    if (pricePopoverBackdrop) pricePopoverBackdrop.hidden = false;
+    if (priceToggleBtn) priceToggleBtn.setAttribute('aria-expanded', 'true');
+  };
+
+  const closePricePopover = () => {
+    if (pricePopover) pricePopover.hidden = true;
+    if (pricePopoverBackdrop) pricePopoverBackdrop.hidden = true;
+    if (priceToggleBtn) priceToggleBtn.setAttribute('aria-expanded', 'false');
+  };
+
   if (priceToggleBtn && pricePopover) {
     priceToggleBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      pricePopover.hidden = !pricePopover.hidden;
+      if (pricePopover.hidden) {
+        openPricePopover();
+      } else {
+        closePricePopover();
+      }
     });
 
+    if (closePricePopoverBtn) {
+      closePricePopoverBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closePricePopover();
+      });
+    }
+
+    if (pricePopoverBackdrop) {
+      pricePopoverBackdrop.addEventListener('click', () => {
+        closePricePopover();
+      });
+    }
+
     document.addEventListener('click', (e) => {
-      if (!pricePopover.contains(e.target) && e.target !== priceToggleBtn) {
-        pricePopover.hidden = true;
+      if (!pricePopover.contains(e.target) && e.target !== priceToggleBtn && (!pricePopoverBackdrop || e.target !== pricePopoverBackdrop)) {
+        closePricePopover();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !pricePopover.hidden) {
+        closePricePopover();
       }
     });
   }
@@ -3865,7 +3906,7 @@ function initEventListeners() {
       if (indicator) {
         indicator.textContent = AppState.maxPrice < 70000 ? `حتى ${formatMoney(AppState.maxPrice)} ج.م` : 'الكل';
       }
-      if (pricePopover) pricePopover.hidden = true;
+      closePricePopover();
       renderProducts();
     });
   }
@@ -3877,7 +3918,7 @@ function initEventListeners() {
       if (maxPriceValLabel) maxPriceValLabel.textContent = '70,000 ج.م';
       const indicator = document.getElementById('priceIndicatorText');
       if (indicator) indicator.textContent = 'الكل';
-      if (pricePopover) pricePopover.hidden = true;
+      closePricePopover();
       renderProducts();
     });
   }
@@ -3898,6 +3939,7 @@ function initEventListeners() {
     if (maxPriceValLabel) maxPriceValLabel.textContent = '70,000 ج.م';
     const indicator = document.getElementById('priceIndicatorText');
     if (indicator) indicator.textContent = 'الكل';
+    closePricePopover();
 
     renderCategoryNav();
     renderProducts();
@@ -4130,13 +4172,14 @@ function initEventListeners() {
       closeModal('ytVideoModal');
       closeModal('quickViewModal');
       closeModal('adminModal');
+      closeModal('adminLoginModal');
       closeModal('editProductModal');
       closeModal('editCategoryModal');
       toggleCartDrawer(false);
     }
   });
 
-  const modals = ['checkoutModal', 'ytVideoModal', 'quickViewModal', 'adminModal', 'editProductModal', 'editCategoryModal'];
+  const modals = ['checkoutModal', 'ytVideoModal', 'quickViewModal', 'adminModal', 'adminLoginModal', 'editProductModal', 'editCategoryModal'];
   modals.forEach(mId => {
     const modalEl = document.getElementById(mId);
     if (modalEl) {
@@ -4681,127 +4724,147 @@ function switchAdminTab(targetTabId) {
 }
 window.switchAdminTab = switchAdminTab;
 
-// قائمة حسابات المدير العام المعتمدة (Master Admins) بكامل الصلاحيات
-const MASTER_ADMIN_ACCOUNTS = {
-  'electronicsbusiness.num1@gmail.com': {
-    email: 'electronicsbusiness.num1@gmail.com',
-    name: 'المدير العام (Electronics Business)',
-    role: 'admin',
-    is_admin: true,
-    is_master: true,
-    permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings']
-  },
-  'abdelrhmanfawzy57@gmail.com': {
-    email: 'abdelrhmanfawzy57@gmail.com',
-    name: 'المدير العام (عبدالرحمن فوزي)',
-    role: 'admin',
-    is_admin: true,
-    is_master: true,
-    permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings']
-  },
-  'admin': {
-    email: 'admin@asmaworld.com',
-    name: 'المدير العام (Admin Master)',
-    role: 'admin',
-    is_admin: true,
-    is_master: true,
-    permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings']
-  }
+// --------------------------------------------------------------------------
+// 13. Admin Authentication & Protected Access Engine
+// --------------------------------------------------------------------------
+const ADMIN_CREDENTIALS = {
+  username: 'lenovo laptop',
+  password: 'omer#2015'
 };
 
-function initAuth() {
-  const savedSession = localStorage.getItem('asma_auth_session') || sessionStorage.getItem('asma_auth_session');
-  if (savedSession) {
-    try {
-      const parsed = JSON.parse(savedSession);
-      if (parsed && parsed.is_admin === true && parsed.role === 'admin') {
-        AuthState.currentUser = parsed;
-      } else {
-        AuthState.currentUser = null;
-      }
-    } catch (e) {
-      AuthState.currentUser = null;
-    }
-  }
-
-  // إذا لم تكن هناك جلسة نشطة (مثلاً بعد الضغط على تسجيل الخروج بالخطأ)، يتم استعادة جلسة المدير العام تلقائياً فوراً
-  if (!AuthState.currentUser) {
-    const defaultMaster = MASTER_ADMIN_ACCOUNTS['abdelrhmanfawzy57@gmail.com'] || MASTER_ADMIN_ACCOUNTS['electronicsbusiness.num1@gmail.com'];
-    const autoSession = {
-      username: defaultMaster.email,
-      email: defaultMaster.email,
-      role: 'admin',
-      is_admin: true,
-      is_master: true,
-      name: defaultMaster.name,
-      permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
-      loginAt: new Date().toISOString()
-    };
-    AuthState.currentUser = autoSession;
-    localStorage.setItem('asma_auth_session', JSON.stringify(autoSession));
-  }
-
-  updateAuthUI();
-}
-
 function isAdminAuthenticated() {
-  return Boolean(
-    AuthState.currentUser && 
-    AuthState.currentUser.is_admin === true && 
-    AuthState.currentUser.role === 'admin'
-  );
+  try {
+    const session = sessionStorage.getItem('asma_admin_session') || localStorage.getItem('asma_admin_session');
+    if (session) {
+      const parsed = JSON.parse(session);
+      return parsed && parsed.isLoggedIn === true && parsed.username === ADMIN_CREDENTIALS.username;
+    }
+  } catch (e) {}
+  return false;
 }
 window.isAdminAuthenticated = isAdminAuthenticated;
 
-function updateAuthUI() {
-  const isAuth = isAdminAuthenticated();
-  const openAdminBtn = document.getElementById('openAdminBtn');
-  const mobNavAdmin = document.getElementById('mobNavAdmin');
-  const footerAdminLink = document.getElementById('footerAdminLink');
-  const sessionPill = document.getElementById('adminSessionPill');
-  const adminHeaderLabel = document.getElementById('adminHeaderLabel');
-  const mobNavAdminLabel = document.getElementById('mobNavAdminLabel');
+function handleAdminLogin(e) {
+  if (e) e.preventDefault();
 
-  if (openAdminBtn) {
-    openAdminBtn.style.display = 'inline-flex';
-    if (adminHeaderLabel) {
-      adminHeaderLabel.textContent = isAuth ? 'لوحة الإدارة 👑' : 'دخول الإدارة 🔐';
-    }
-  }
-  if (mobNavAdmin) {
-    mobNavAdmin.style.display = 'flex';
-    if (mobNavAdminLabel) {
-      mobNavAdminLabel.textContent = isAuth ? 'الإدارة 👑' : 'الإدارة 🔐';
-    }
-  }
-  if (footerAdminLink) {
-    footerAdminLink.innerHTML = isAuth 
-      ? '<span>👑 لوحة الإدارة (مسجل كمدير عام)</span>' 
-      : '<span>🔐 بوابة الإدارة</span>';
-  }
-  if (sessionPill && AuthState.currentUser) {
-    sessionPill.textContent = `👑 ${AuthState.currentUser.name || 'مدير عام'} (كامل الصلاحيات)`;
-  }
-}
-window.updateAuthUI = updateAuthUI;
+  const usernameInput = document.getElementById('adminUsernameInput');
+  const passwordInput = document.getElementById('adminPasswordInput');
+  const rememberMe = document.getElementById('adminRememberMe');
+  const alertBox = document.getElementById('adminLoginAlert');
+  const submitBtn = document.getElementById('adminLoginSubmitBtn');
 
-function openAdminPanel(defaultTab = 'productsTab') {
-  // التحقق من الصلاحيات واستعادة الجلسة للمدير العام فوراً
-  if (!isAdminAuthenticated()) {
-    const defaultMaster = MASTER_ADMIN_ACCOUNTS['abdelrhmanfawzy57@gmail.com'] || MASTER_ADMIN_ACCOUNTS['electronicsbusiness.num1@gmail.com'];
-    const autoSession = {
-      username: defaultMaster.email,
-      email: defaultMaster.email,
-      role: 'admin',
-      is_admin: true,
-      is_master: true,
-      name: defaultMaster.name,
-      permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
+  const username = usernameInput ? usernameInput.value.trim() : '';
+  const password = passwordInput ? passwordInput.value : '';
+
+  if (!username || !password) {
+    if (alertBox) {
+      alertBox.style.display = 'block';
+      alertBox.className = 'admin-auth-alert error';
+      alertBox.innerHTML = '⚠️ يرجى إدخال اسم المستخدم وكلمة المرور للمتابعة!';
+    }
+    return;
+  }
+
+  // التحقق من صحة اسم المستخدم وكلمة المرور
+  if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+    if (alertBox) {
+      alertBox.style.display = 'block';
+      alertBox.className = 'admin-auth-alert success';
+      alertBox.innerHTML = '✅ تم التحقق بنجاح! جاري فتح لوحة الإدارة...';
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳ جاري الدخول...</span>';
+    }
+
+    const sessionData = {
+      isLoggedIn: true,
+      username: ADMIN_CREDENTIALS.username,
       loginAt: new Date().toISOString()
     };
-    AuthState.currentUser = autoSession;
-    localStorage.setItem('asma_auth_session', JSON.stringify(autoSession));
-    updateAuthUI();
+
+    sessionStorage.setItem('asma_admin_session', JSON.stringify(sessionData));
+    if (rememberMe && rememberMe.checked) {
+      localStorage.setItem('asma_admin_session', JSON.stringify(sessionData));
+    } else {
+      localStorage.removeItem('asma_admin_session');
+    }
+
+    setTimeout(() => {
+      closeModal('adminLoginModal');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>🔓 تسجيل الدخول</span>';
+      }
+      if (alertBox) {
+        alertBox.style.display = 'none';
+        alertBox.textContent = '';
+      }
+
+      const targetTab = window.pendingAdminTab || 'productsTab';
+      window.pendingAdminTab = null;
+      openModal('adminModal');
+      if (typeof switchAdminTab === 'function') {
+        switchAdminTab(targetTab);
+      }
+      showToast('مرحباً بك! تم تسجيل الدخول إلى لوحة الإدارة بنجاح 👑', 'success');
+    }, 450);
+
+  } else {
+    // خطأ في البيانات
+    if (alertBox) {
+      alertBox.style.display = 'block';
+      alertBox.className = 'admin-auth-alert error';
+      alertBox.innerHTML = '❌ اسم المستخدم أو كلمة المرور غير صحيحة! يرجى التحقق وإعادة المحاولة.';
+    }
+    if (passwordInput) {
+      passwordInput.value = '';
+      passwordInput.focus();
+    }
+    showToast('بيانات الدخول غير صحيحة! يرجى التأكد من اسم المستخدم وكلمة السر 🚫', 'warning');
+  }
+}
+window.handleAdminLogin = handleAdminLogin;
+
+function handleAdminLogout() {
+  if (confirm('هل ترغب بالتأكيد في تسجيل الخروج من لوحة الإدارة؟')) {
+    sessionStorage.removeItem('asma_admin_session');
+    localStorage.removeItem('asma_admin_session');
+    closeModal('adminModal');
+    showToast('تم تسجيل الخروج من لوحة الإدارة بنجاح 🔒', 'info');
+  }
+}
+window.handleAdminLogout = handleAdminLogout;
+
+function togglePasswordVisibility(inputId, btnEl) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (btnEl) btnEl.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    if (btnEl) btnEl.textContent = '👁️';
+  }
+}
+window.togglePasswordVisibility = togglePasswordVisibility;
+
+function openAdminPanel(defaultTab = 'productsTab') {
+  if (!isAdminAuthenticated()) {
+    window.pendingAdminTab = defaultTab;
+    const alertBox = document.getElementById('adminLoginAlert');
+    if (alertBox) {
+      alertBox.style.display = 'none';
+      alertBox.textContent = '';
+    }
+    const uInput = document.getElementById('adminUsernameInput');
+    const pInput = document.getElementById('adminPasswordInput');
+    if (uInput) uInput.value = '';
+    if (pInput) pInput.value = '';
+    openModal('adminLoginModal');
+    if (uInput) setTimeout(() => uInput.focus(), 150);
+    return;
   }
 
   openModal('adminModal');
@@ -4817,147 +4880,6 @@ function openAdminPanel(defaultTab = 'productsTab') {
   }
 }
 window.openAdminPanel = openAdminPanel;
-
-function quickAdminLogin(email) {
-  const matchedAdmin = MASTER_ADMIN_ACCOUNTS[email] || MASTER_ADMIN_ACCOUNTS['abdelrhmanfawzy57@gmail.com'];
-  const userSession = {
-    username: matchedAdmin.email,
-    email: matchedAdmin.email,
-    role: 'admin',
-    is_admin: true,
-    is_master: true,
-    name: matchedAdmin.name,
-    permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
-    loginAt: new Date().toISOString()
-  };
-
-  AuthState.currentUser = userSession;
-  localStorage.setItem('asma_auth_session', JSON.stringify(userSession));
-  sessionStorage.setItem('asma_auth_session', JSON.stringify(userSession));
-
-  closeModal('adminLoginModal');
-  updateAuthUI();
-  showToast(`مرحباً بك يا ${matchedAdmin.name}! تم الدخول بصلاحية مدير عام كاملة 👑`, 'success');
-  openAdminPanel('productsTab');
-}
-window.quickAdminLogin = quickAdminLogin;
-
-function handleAdminLogin(e) {
-  if (e) e.preventDefault();
-  const usernameInput = document.getElementById('adminUsernameInput');
-  const passwordInput = document.getElementById('adminPasswordInput');
-  const rememberMe = document.getElementById('adminRememberMe')?.checked;
-  const alertBox = document.getElementById('adminLoginAlert');
-
-  const rawUsername = (usernameInput?.value || '').trim();
-  const username = rawUsername.toLowerCase();
-  const password = (passwordInput?.value || '').trim();
-
-  // كلمات المرور المقبولة للآدمين
-  const validAdminPasswords = ['admin123', 'admin', 'asma123', 'asma1234', '123456', '12345678'];
-
-  // التحقق من حسابات المدير العام المعتمدة
-  const matchedAdmin = MASTER_ADMIN_ACCOUNTS[username] || 
-    (username.includes('electronicsbusiness') ? MASTER_ADMIN_ACCOUNTS['electronicsbusiness.num1@gmail.com'] : null) ||
-    (username.includes('abdelrhmanfawzy57') ? MASTER_ADMIN_ACCOUNTS['abdelrhmanfawzy57@gmail.com'] : null) ||
-    (username === 'admin' ? MASTER_ADMIN_ACCOUNTS['admin'] : null);
-
-  const isValidUser = Boolean(matchedAdmin);
-  const isValidPass = validAdminPasswords.includes(password) || password.length >= 4;
-
-  if (isValidUser && isValidPass) {
-    const userSession = {
-      username: rawUsername,
-      email: matchedAdmin.email,
-      role: 'admin',
-      is_admin: true,
-      is_master: true,
-      name: matchedAdmin.name,
-      permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
-      loginAt: new Date().toISOString()
-    };
-
-    AuthState.currentUser = userSession;
-    if (rememberMe) {
-      localStorage.setItem('asma_auth_session', JSON.stringify(userSession));
-    } else {
-      sessionStorage.setItem('asma_auth_session', JSON.stringify(userSession));
-      localStorage.setItem('asma_auth_session', JSON.stringify(userSession));
-    }
-
-    if (alertBox) {
-      alertBox.style.display = 'none';
-      alertBox.textContent = '';
-    }
-
-    closeModal('adminLoginModal');
-    updateAuthUI();
-
-    if (usernameInput) usernameInput.value = '';
-    if (passwordInput) passwordInput.value = '';
-
-    showToast(`مرحباً بك يا ${matchedAdmin.name}! تم تسجيل الدخول بصلاحية مدير عام كاملة 👑`, 'success');
-    openAdminPanel('productsTab');
-  } else {
-    if (alertBox) {
-      alertBox.style.display = 'block';
-      alertBox.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة! يرجى التأكد من الحساب المصرح له والمحاولة مجدداً.';
-    }
-    showToast('بيانات الدخول غير صحيحة أو غير مصرح لها! 🚫', 'error');
-  }
-}
-window.handleAdminLogin = handleAdminLogin;
-
-function handleAdminLogout() {
-  if (confirm('هل أنت متأكد من تسجيل الخروج من لوحة الإدارة؟')) {
-    localStorage.removeItem('asma_auth_session');
-    sessionStorage.removeItem('asma_auth_session');
-    AuthState.currentUser = null;
-
-    closeModal('adminModal');
-    closeModal('editProductModal');
-    closeModal('editCategoryModal');
-
-    if (window.location.hash === '#admin' || window.location.hash === '#adminPanel' || window.location.hash === '#dashboard') {
-      history.replaceState(null, null, window.location.pathname + window.location.search);
-    }
-
-    updateAuthUI();
-    showToast('تم تسجيل الخروج من لوحة الإدارة. يمكنك الدخول في أي وقت بالضغط على زر "دخول الإدارة" 👋', 'info');
-  }
-}
-window.handleAdminLogout = handleAdminLogout;
-
-function handleAdminPortalClick() {
-  if (isAdminAuthenticated()) {
-    openAdminPanel('productsTab');
-  } else {
-    openModal('adminLoginModal');
-  }
-}
-window.handleAdminPortalClick = handleAdminPortalClick;
-
-function togglePasswordVisibility(inputId, btn) {
-  const input = document.getElementById(inputId);
-  if (!input) return;
-  const isPassword = input.type === 'password';
-  input.type = isPassword ? 'text' : 'password';
-  if (btn) btn.textContent = isPassword ? '🙈' : '👁️';
-}
-window.togglePasswordVisibility = togglePasswordVisibility;
-
-function checkRouteAuth() {
-  const hash = window.location.hash;
-  if (hash === '#admin' || hash === '#adminPanel' || hash === '#dashboard') {
-    if (isAdminAuthenticated()) {
-      openAdminPanel('productsTab');
-    } else {
-      history.replaceState(null, null, window.location.pathname + window.location.search);
-      showToast('غير مصرح لك بالوصول لهذه الصفحة! 🚫', 'error');
-      openModal('adminLoginModal');
-    }
-  }
-}
 
 // --------------------------------------------------------------------------
 // 14. Helper Utilities & Masking

@@ -54,29 +54,21 @@
       }
     }
     function openAdminPanel(tabName = 'productsTab') {
-      try {
-        let rawAuth = localStorage.getItem('asma_auth_session');
-        if (!rawAuth) {
-          // استعادة جلسة المدير العام تلقائياً فوراً لضمان عدم قفل اللوحة
-          const defaultSession = {
-            username: 'abdelrhmanfawzy57@gmail.com',
-            email: 'abdelrhmanfawzy57@gmail.com',
-            role: 'admin',
-            is_admin: true,
-            is_master: true,
-            name: 'المدير العام (عبدالرحمن فوزي)',
-            permissions: ['all', 'products', 'categories', 'orders', 'analytics', 'hero', 'settings'],
-            loginAt: new Date().toISOString()
-          };
-          localStorage.setItem('asma_auth_session', JSON.stringify(defaultSession));
-          if (typeof AuthState !== 'undefined') {
-            AuthState.currentUser = defaultSession;
-          }
-          if (typeof updateAuthUI === 'function') {
-            updateAuthUI();
-          }
+      if (typeof window.isAdminAuthenticated === 'function' && !window.isAdminAuthenticated()) {
+        window.pendingAdminTab = tabName;
+        const errAlert = document.getElementById('adminLoginAlert');
+        if (errAlert) {
+          errAlert.style.display = 'none';
+          errAlert.textContent = '';
         }
-      } catch (e) {}
+        const uInput = document.getElementById('adminUsernameInput');
+        const pInput = document.getElementById('adminPasswordInput');
+        if (uInput) uInput.value = '';
+        if (pInput) pInput.value = '';
+        openModal('adminLoginModal');
+        if (uInput) setTimeout(() => uInput.focus(), 150);
+        return;
+      }
       openModal('adminModal');
       if (typeof switchAdminTab === 'function') {
         switchAdminTab(tabName);
@@ -153,10 +145,10 @@
         </a>
 
         <!-- Admin Panel Trigger -->
-        <button class="btn-icon-action btn-admin-header" id="openAdminBtn" onclick="openAdminPanel()" title="لوحة إدارة المتجر"
+        <button class="btn-icon-action" id="openAdminBtn" onclick="openAdminPanel()" title="لوحة إدارة المتجر"
           aria-label="لوحة التحكم">
           <span class="action-icon">⚙️</span>
-          <span class="action-label" id="adminHeaderLabel">لوحة الإدارة</span>
+          <span class="action-label">الإدارة</span>
         </button>
 
         <!-- Cart Trigger with Counter & Live Deposit Preview -->
@@ -228,30 +220,7 @@
               الاستلام</strong> والمعاينة!
           </p>
 
-          <!-- Key Financial Highlights Mini Cards -->
-          <div class="hero-features-chips">
-            <div class="feature-chip">
-              <span class="chip-icon">💳</span>
-              <div class="chip-text">
-                <strong>20% عربون أونلاين</strong>
-                <small>تأكيد الحجز فورياً</small>
-              </div>
-            </div>
-            <div class="feature-chip">
-              <span class="chip-icon">💵</span>
-              <div class="chip-text">
-                <strong>80% كاش عند الاستلام</strong>
-                <small>بعد الفحص والمعاينة</small>
-              </div>
-            </div>
-            <div class="feature-chip">
-              <span class="chip-icon">🛡️</span>
-              <div class="chip-text">
-                <strong>ضمان أصلي معتمد</strong>
-                <small>من الوكيل الرسمي 100%</small>
-              </div>
-            </div>
-          </div>
+
 
           <!-- Hero Action Buttons -->
           <div class="hero-cta-group">
@@ -440,17 +409,23 @@
 
             <!-- Price Range Filter Modal / Dropdown Toggle -->
             <div class="filter-tool-item">
-              <button class="btn-filter-toggle" id="priceFilterToggleBtn">
+              <button class="btn-filter-toggle" id="priceFilterToggleBtn" type="button" aria-expanded="false" aria-controls="pricePopover">
                 <span>💰 نطاق السعر</span>
                 <span class="price-indicator" id="priceIndicatorText">الكل</span>
               </button>
+
+              <!-- Mobile Dimmed Backdrop -->
+              <div class="price-popover-backdrop" id="pricePopoverBackdrop" hidden></div>
 
               <!-- Popover Price Slider -->
               <div class="price-popover" id="pricePopover" hidden>
                 <div class="price-popover-inner">
                   <div class="price-popover-header">
-                    <h4>تحديد أقصى سعر</h4>
-                    <span id="maxPriceValLabel">70,000 ج.م</span>
+                    <div class="price-popover-title-wrap">
+                      <h4>تحديد أقصى سعر</h4>
+                      <span id="maxPriceValLabel">70,000 ج.م</span>
+                    </div>
+                    <button type="button" class="btn-close-popover" id="closePricePopoverBtn" aria-label="إغلاق">&times;</button>
                   </div>
                   <input type="range" id="priceRangeInput" min="1000" max="70000" step="500" value="70000"
                     class="price-slider">
@@ -848,6 +823,10 @@
                 <span class="meta-lbl">عنوان التوصيل والمعاينة:</span>
                 <span class="meta-val" id="receiptCustAddress">-</span>
               </div>
+              <div class="meta-item full" id="receiptCustNotesItem">
+                <span class="meta-lbl">ملاحظات إضافية للتوصيل:</span>
+                <span class="meta-val" id="receiptCustNotes" style="font-weight: 700; color: var(--text-main);">-</span>
+              </div>
             </div>
 
             <table class="receipt-table">
@@ -976,11 +955,11 @@
         <div class="modal-title-wrap">
           <span class="modal-icon">🔐</span>
           <div>
-            <h3 class="modal-title">تسجيل دخول إدارة المتجر</h3>
-            <p class="modal-subtitle">لوحة التحكم مقيدة ومخصصة للمدير المعتمد فقط (Admin Access)</p>
+            <h3 class="modal-title">تسجيل دخول الإدارة (Admin Login)</h3>
+            <p class="modal-subtitle">لوحة التحكم مقيدة ومخصصة للمدير المعتمد فقط</p>
           </div>
         </div>
-        <button class="btn-close-modal" onclick="closeModal('adminLoginModal')" aria-label="إغلاق">✕</button>
+        <button type="button" class="btn-close-modal" onclick="closeModal('adminLoginModal')" aria-label="إغلاق">✕</button>
       </div>
 
       <div class="modal-body admin-login-modal-body">
@@ -988,16 +967,16 @@
 
         <form id="adminLoginForm" class="admin-login-form" onsubmit="handleAdminLogin(event)">
           <div class="form-group">
-            <label for="adminUsernameInput">اسم المستخدم أو البريد الإلكتروني <span class="req">*</span></label>
+            <label for="adminUsernameInput">اسم المستخدم (Username) <span class="req">*</span></label>
             <div class="auth-input-wrapper">
               <span class="auth-input-icon">👤</span>
               <input type="text" id="adminUsernameInput" class="form-control auth-control"
-                placeholder="أدخل اسم المستخدم (مثال: admin)" required autocomplete="username" dir="ltr">
+                placeholder="أدخل اسم المستخدم" required autocomplete="username" dir="ltr">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="adminPasswordInput">كلمة المرور السرية <span class="req">*</span></label>
+            <label for="adminPasswordInput">كلمة المرور (Password) <span class="req">*</span></label>
             <div class="auth-input-wrapper password-input-group">
               <span class="auth-input-icon">🔑</span>
               <input type="password" id="adminPasswordInput" class="form-control auth-control"
@@ -1011,27 +990,14 @@
           <div class="auth-form-options">
             <label class="auth-remember-label">
               <input type="checkbox" id="adminRememberMe" checked>
-              <span>تذكر تسجيل الدخول كمدير على هذا الجهاز</span>
+              <span>تذكر تسجيل الدخول على هذا الجهاز</span>
             </label>
           </div>
 
-          <div class="admin-login-hints">
-            <div class="hint-header">👑 <strong>حسابات المدير العام المعتمدة (Master Admin) بكامل الصلاحيات:</strong></div>
-            <div class="hint-credentials" style="flex-direction: column; gap: 8px;">
-              <button type="button" class="btn-quick-admin-login" onclick="quickAdminLogin('abdelrhmanfawzy57@gmail.com')">
-                <span>⚡ تسجيل دخول فوري: <strong>abdelrhmanfawzy57@gmail.com</strong> (المدير العام عبدالرحمن فوزي)</span>
-              </button>
-              <button type="button" class="btn-quick-admin-login" onclick="quickAdminLogin('electronicsbusiness.num1@gmail.com')">
-                <span>⚡ تسجيل دخول فوري: <strong>electronicsbusiness.num1@gmail.com</strong> (المدير العام)</span>
-              </button>
-              <small style="color: #64748B; margin-top: 4px; font-weight: 600;">🔑 أو أدخل كلمة المرور: <strong>admin123</strong> أو <strong>admin</strong></small>
-            </div>
-          </div>
-
-          <div class="modal-actions-bar" style="margin-top: 16px; justify-content: flex-end; gap: 10px;">
+          <div class="modal-actions-bar" style="margin-top: 18px; justify-content: flex-end; gap: 10px;">
             <button type="button" class="btn-cancel-flat" onclick="closeModal('adminLoginModal')">إلغاء</button>
             <button type="submit" class="btn-primary-action btn-admin-login-submit" id="adminLoginSubmitBtn">
-              <span>🔓 تسجيل الدخول كمدير</span>
+              <span>🔓 تسجيل الدخول</span>
             </button>
           </div>
         </form>
@@ -1048,7 +1014,7 @@
           <span class="modal-icon">⚙️</span>
           <div>
             <h3>لوحة تحكم وإدارة متجر "عالم اسما"</h3>
-            <span class="admin-session-pill" id="adminSessionPill">👑 مدير معتمد (Admin)</span>
+            <span class="admin-session-pill">👑 مدير معتمد (lenovo laptop)</span>
           </div>
         </div>
         <div class="admin-header-actions-group">
@@ -1913,10 +1879,9 @@
       </div>
       <span class="nav-text">السلة</span>
     </button>
-    <!-- Mobile Nav Admin -->
     <button class="bottom-nav-item" id="mobNavAdmin" onclick="openAdminPanel()">
       <span class="nav-icon">⚙️</span>
-      <span class="nav-text" id="mobNavAdminLabel">الإدارة</span>
+      <span class="nav-text">الإدارة</span>
     </button>
   </nav>
 
@@ -1956,6 +1921,9 @@
       <div class="footer-col">
         <h4 class="footer-heading">🚚 تعليمات شركة الشحن</h4>
         <div class="footer-shipping-policy">
+          <p class="footer-policy-delivery-time" style="margin-bottom: 8px; font-weight: 800; color: #FFF; font-size: 13.5px; background: rgba(255, 255, 255, 0.12); padding: 6px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+            ⏱️ يتم استلام الاوردر خلال يومان الي 7 ايام
+          </p>
           <p class="footer-policy-text">
             <strong>تنويه هام:</strong> شركة الشحن لا تدخل القرى، الحواري، الأسواق، العِزب، أو الأماكن الضيقة. يتم تسليم
             الأوردر في أقرب نقطة رئيسية أو موقع متاح بالتنسيق المباشر مع مندوب الشحن.
@@ -1993,12 +1961,7 @@
     <div class="footer-bottom-bar">
       <div class="container footer-bottom-content">
         <p>© 2026 جميع الحقوق محفوظة لمتجر <strong>عالم اسما - Asma World</strong> للأجهزة المنزلية.</p>
-        <div class="footer-bottom-actions">
-          <button type="button" class="footer-admin-link" id="footerAdminLink" onclick="handleAdminPortalClick()">
-            <span>🔐 بوابة الإدارة</span>
-          </button>
-          <span class="footer-credit">تم التطوير بأحدث معايير الويب الفائقة السرعة ⚡</span>
-        </div>
+        <p class="footer-credit">تم التطوير بأحدث معايير الويب الفائقة السرعة ⚡</p>
       </div>
     </div>
   </footer>
